@@ -16,11 +16,12 @@ So far status is next:
 |Clang    | 3.8.0 x86	|Windows               |Compiler crash                    |
 |MinGW GCC| 5.3.0 x64   |Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
 |MinGW GCC| 5.3.0 x86	|Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
-|GCC      | 4.9.2 ARM	|Linux (RasPi2)        |**WORKS DELEGATE_TYPE_COMPATIBLE**|
+|GCC      | 4.9.2 ARM	|Linux (RasPi2)        |**WORKS DELEGATE_TYPE_INTERNAL** crash at Num=3|
 |MinGW GCC| 5.3.0 x64   |Linux                 |**WORKS DELEGATE_TYPE_INTERNAL**  |
 |Clang    | 3.7.1 x64	|Linux                 |**WORKS DELEGATE_TYPE_INTERNAL**  |
-|VS2015   | x64         |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at TrickyVirtualFunction |
-|VS2015   | x86	        |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at first call |
+|VS2015   | x64         |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at Num=5 |
+|VS2015   | x86	        |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at Num=0 |
+|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |**WORKS DELEGATE_TYPE_INTERNAL** crash at Num=3|
 
 At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and similar platforms.
 
