@@ -1,25 +1,25 @@
-GCC version: 5.3.0
+MSC_VER version: 1900
 Intel x86
 Pointer size 4
-Using fast internal GCC/CLANG delegates
-A: vtable @ 0041D9C8 = 00416EC0 00000698 00000688 00000000
-D: vtable @ 0041D9DC = 00417270 00417250 FFFFF978 00000000
+Using slow compatible delegates
+A: vtable @ 00923400 = 00921180 00923630 009210F0 009210A0
+D: vtable @ 009233EC = 00921260 00923544 009210B0 009210A0
 In SimpleMemberFunction in Base A. Num=1
-Size = 8 bytes:
-  00416E80
-  00000000
+Size = 4 bytes:
+  00921160
 In SimpleVirtualFunction in Base A. Num=1
-Size = 8 bytes:
-  00000001
-  00000000
+Size = 4 bytes:
+  00921C1B
 In SimpleDerived. num=1
-Size = 8 bytes:
-  00417230
+Size = 12 bytes:
+  00921240
+  00000000
   00000000
 In Derived TrickyMemberFunction. Num=1
-Size = 8 bytes:
-  00000005
+Size = 12 bytes:
+  00921C1F
   00000000
+  00000004
 In SimpleMemberFunction in Base A. Num=0
 In SimpleStaticFunction. Num=1
 In StaticMemberFunction. Num=2

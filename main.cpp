@@ -157,9 +157,11 @@ int main(int argc, char* argv[])
 	funclist[5] = MyDelegate(FUNC(CDerivedClass::TrickyVirtualFunction),&c);
 	funclist[6] = MyDelegate(FUNC(COtherClass::TrickyVirtualFunction),(COtherClass*)&c);
 	funclist[7] = MyDelegate(FUNC(CDerivedClass::SimpleDerivedFunction),&c);
+	fflush(stdout);
 	for (int i = 0; i<8; i++) {
 		if (!funclist[i].isnull()) {
 			funclist[i](i);
+			fflush(stdout);
 		}
 	}
 	printf("Done\n");
