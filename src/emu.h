@@ -8,8 +8,8 @@
 
 ***************************************************************************/
 
-#ifndef __DEVICE_H__
-#define __DEVICE_H__
+#ifndef __EMU_H__
+#define __EMU_H__
 
 class device_t;
 
@@ -77,4 +77,4 @@ private:
 };
 
 
-#endif  /* __DEVICE_H__ */
+#endif  /* __EMU_H__ */
