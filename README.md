@@ -14,8 +14,6 @@ So far status is next:
 |MinGW GCC| 5.3.0 x86	|Windows               |**DELEGATE_TYPE_INTERNAL**        |
 |Clang    | 3.8.0 x64	|Windows               |**DELEGATE_TYPE_INTERNAL**        |
 |Clang    | 3.8.0 x86	|Windows               |Compiler crash                    |
-|MinGW GCC| 5.3.0 x64   |Windows               |**DELEGATE_TYPE_INTERNAL**        |
-|MinGW GCC| 5.3.0 x86	|Windows               |**DELEGATE_TYPE_INTERNAL**        |
 |GCC      | 4.9.2 ARM	|Linux (RasPi2)        |**DELEGATE_TYPE_INTERNAL** crash at Num=3|
 |MinGW GCC| 5.3.0 x64   |Linux                 |**DELEGATE_TYPE_INTERNAL**        |
 |Clang    | 3.7.1 x64	|Linux                 |**DELEGATE_TYPE_INTERNAL**        |
@@ -24,6 +22,24 @@ So far status is next:
 |GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |**DELEGATE_TYPE_INTERNAL** crash at Num=3|
 
 At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and similar platforms.
+
+# Benchmarks
+
+Doing 100000000 to a virtual method
+|Compiler | Version     | OS                   | Time native (ns)                 |Time compatible (ns)             |
+|---------|-------------|----------------------|---------------------------------:|--------------------------------:|
+|MinGW GCC| 5.3.0 x64   |Windows               | 138                              | 165                             |
+|MinGW GCC| 5.3.0 x86	|Windows               | 147                              | 249                             |
+|Clang    | 3.8.0 x64	|Windows               | 137                              | 159                             |
+|Clang    | 3.8.0 x86	|Windows               |                                  |                                 |
+|GCC      | 4.9.2 ARM	|Linux (RasPi2)        |                                  |                                 |
+|MinGW GCC| 5.3.0 x64   |Linux                 |                                  |                                 |
+|Clang    | 3.7.1 x64	|Linux                 |                                  |                                 |
+|VS2015   | x64         |Windows               |                                  |                                 |
+|VS2015   | x86	        |Windows               |                                  |                                 |
+|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |                                  |                                 |
+
+Windows machine Intel i7-4790K @4.00GHz
 
 # Description
 There are many implementations of delegate-like functionality for
