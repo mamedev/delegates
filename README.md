@@ -2,8 +2,11 @@
 
 # Summary
 
-Idea of this project is to make fast implementation in C++11/14 that
-will work on multiple platforms at maximum speed. So far status is next
+Idea of this project is to make fast implementation in C++11/14 that will work on multiple platforms at maximum speed.
+
+main code is in delegate.h and delegate.cpp, rest is just to be able to test some usages in MAME itself.
+
+So far status is next:
 
 |Compiler | Version     | OS                   | Status                           |
 |---------|-------------|----------------------|----------------------------------|
