@@ -26,6 +26,7 @@ At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and
 # Benchmarks
 
 Doing 100000000 to a virtual method
+
 |Compiler | Version     | OS                   | Time native (ns)                 |Time compatible (ns)             |
 |---------|-------------|----------------------|---------------------------------:|--------------------------------:|
 |MinGW GCC| 5.3.0 x64   |Windows               | 138                              | 165                             |
