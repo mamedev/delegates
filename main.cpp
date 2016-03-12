@@ -218,14 +218,14 @@ int main(int argc, char* argv[])
 	
 	printf("Benchmarking virtual call : ");
 	{
-		clock_t before = clock();
+		auto before = std::chrono::high_resolution_clock::now(); ;
 		for (int i = 0; i < 100000000; i++)
 		{
 			md(i);
 		}
-		clock_t after = clock();
-		int elapsed = (int)(after - before);
-		printf("%d\n", elapsed);
+		auto after = std::chrono::high_resolution_clock::now(); ;
+		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
+		printf("%lld\n", elapsed.count());
 	}
 
 
