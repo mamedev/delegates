@@ -83,7 +83,7 @@ void dump_mfp(_FunctionClass *object, void (_FunctionClass::*mfp)(int num))
 void dump_vtable(const char *name, void *ptr)
 {
 	void **vtable = *reinterpret_cast<void ***>(ptr);
-	printf("\n%s: vtable @ %p = %p %p %p %p\n", name, vtable, vtable[0], vtable[1], vtable[2], vtable[3]);
+	printf("%s: vtable @ %p = %p %p %p %p\n", name, vtable, vtable[0], vtable[1], vtable[2], vtable[3]);
 }
 
 int main(int argc, char* argv[])
@@ -118,6 +118,14 @@ int main(int argc, char* argv[])
 	printf("Unknown CPU\n");
 #endif //
 	printf("Pointer size %d\n", (int)sizeof(void *));
+
+#if USE_DELEGATE_TYPE==DELEGATE_TYPE_COMPATIBLE
+	printf("Using slow compatible delegates\n");
+#elif USE_DELEGATE_TYPE==DELEGATE_TYPE_INTERNAL 
+	printf("Using fast internal GCC/CLANG delegates\n");
+#elif USE_DELEGATE_TYPE==DELEGATE_TYPE_MSVC
+	printf("Using fast internal MSVC delegates\n");
+#endif
 
 	running_machine machine;
 	MyDelegate funclist[12]; // delegates are initialized to empty
