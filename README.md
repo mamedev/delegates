@@ -29,9 +29,9 @@ Doing 100000000 to a virtual method
 
 |Compiler | Version     | OS                   | Time native (ns)                 |Time compatible (ns)             |
 |---------|-------------|----------------------|---------------------------------:|--------------------------------:|
-|MinGW GCC| 5.3.0 x64   |Windows               | 138                              | 165                             |
-|MinGW GCC| 5.3.0 x86	|Windows               | 147                              | 249                             |
-|Clang    | 3.8.0 x64	|Windows               | 137                              | 159                             |
+|MinGW GCC| 5.3.0 x64   |Windows               | 116442400                        | 200505200                       |
+|MinGW GCC| 5.3.0 x86	|Windows               | 132027200                        | 279683700                       |
+|Clang    | 3.8.0 x64	|Windows               | 131536700                        | 159824800                       |
 |Clang    | 3.8.0 x86	|Windows               |                                  |                                 |
 |GCC      | 4.9.2 ARM	|Linux (RasPi2)        |                                  |                                 |
 |MinGW GCC| 5.3.0 x64   |Linux                 |                                  |                                 |
