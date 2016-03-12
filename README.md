@@ -4,7 +4,7 @@
 
 Idea of this project is to make fast implementation in C++11/14 that will work on multiple platforms at maximum speed.
 
-main code is in delegate.h and delegate.cpp, rest is just to be able to test some usages in MAME itself.
+Main code is in delegate.h and delegate.cpp, rest is just to be able to test some usages in MAME itself.
 
 So far status is next:
 
@@ -16,7 +16,7 @@ So far status is next:
 |Glang    | 3.8.0 x86	|Windows               |Compiler crash                    |
 |MinGW GCC| 5.3.0 x64   |Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
 |MinGW GCC| 5.3.0 x86	|Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
-|GCC      | 4.9.2 ARM	|Linux (Raspberry Pi2) |**WORKS DELEGATE_TYPE_COMPATIBLE**|
+|GCC      | 4.9.2 ARM	|Linux (RasPi2)        |**WORKS DELEGATE_TYPE_COMPATIBLE**|
 |MinGW GCC| 5.3.0 x64   |Linux                 |**WORKS DELEGATE_TYPE_INTERNAL**  |
 |Glang    | 3.7.1 x64	|Linux                 |**WORKS DELEGATE_TYPE_INTERNAL**  |
 |VS2015   | x64         |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at TrickyVirtualFunction |
