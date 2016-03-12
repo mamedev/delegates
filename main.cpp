@@ -60,7 +60,7 @@ public:
 	CDerivedClass() : CBaseClass("Base of Derived") { m_somemember[0] = 1.2345; }
 	void SimpleDerivedFunction(int num) { printf("In SimpleDerived. num=%d\n", num); }
 	virtual void AnotherUnusedVirtualFunction(int num) {}
-	virtual void TrickyVirtualFunction(int num) {
+	virtual void TrickyVirtualFunction(int num) override {
 		printf("In Derived TrickyMemberFunction. Num=%d\n", num);
 	}
 };
