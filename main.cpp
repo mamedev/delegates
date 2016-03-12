@@ -64,6 +64,29 @@ public:
 		printf("In Derived TrickyMemberFunction. Num=%d\n", num);
 	}
 };
+
+
+class MyClass
+{
+public:
+	MyClass() { i = 0; }
+	~MyClass() { }
+
+	void docount2(int j) { i += j; }
+	virtual void docount(int j) { i+=j; }
+	int get() { return i; }
+private:
+	int i;
+};
+
+class MyClass2 : public MyClass
+{
+public:
+	MyClass2() : MyClass() { }
+	~MyClass2() { }
+	virtual void docount(int j) {  }
+};
+
 #define FUNC(x) &x, #x
 
 typedef delegate<void(void)> VoidDelegate;
@@ -188,6 +211,22 @@ int main(int argc, char* argv[])
 	sub1_write_del(200);
 
 	printf("read_line_delegate sub 1: %d\n", sub1_read_del());
+
+	typedef delegate<void(int j)> driver_callback_delegate;
+	MyClass2 mc;
+	driver_callback_delegate md = driver_callback_delegate(FUNC(MyClass2::docount), static_cast<MyClass2 *>(&mc));
+	
+	printf("Benchmarking virtual call : ");
+	{
+		clock_t before = clock();
+		for (int i = 0; i < 100000000; i++)
+		{
+			md(i);
+		}
+		clock_t after = clock();
+		int elapsed = (int)(after - before);
+		printf("%d\n", elapsed);
+	}
 
 
 	printf("Done\n");
