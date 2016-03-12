@@ -119,6 +119,11 @@
 
 #define USE_STATIC_DELEGATE 1
 
+#if defined(FORCE_COMPATIBLE)
+	#undef USE_DELEGATE_TYPE
+	#define USE_DELEGATE_TYPE DELEGATE_TYPE_COMPATIBLE
+#endif
+
 #if (USE_DELEGATE_TYPE == DELEGATE_TYPE_COMPATIBLE)
 	#define MEMBER_ABI
 	#define HAS_DIFFERENT_ABI 0
@@ -241,7 +246,7 @@ private:
 	static _ReturnType method_stub(delegate_generic_class *object, Params ... args)
 	{
 		delegate_mfp *_this = reinterpret_cast<delegate_mfp *>(object);
-		typedef _ReturnType (_FunctionClass::*mfptype)(std::forward<Params>(args)...);
+		typedef _ReturnType (_FunctionClass::*mfptype)(Params...);
 		mfptype &mfp = *reinterpret_cast<mfptype *>(&_this->m_rawdata);
 		return (reinterpret_cast<_FunctionClass *>(_this->m_realobject)->*mfp)(std::forward<Params>(args)...);
 	}
