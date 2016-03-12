@@ -1,5 +1,25 @@
 # Fast delegates implementation
 
+# Summary
+
+Idea of this project is to make fast implementation in C++11/14 that
+will work on multiple platforms at maximum speed. So far status is next
+
+|Compiler | Version     | OS                   | Status                           |
+|---------|-------------|----------------------|----------------------------------|
+|MinGW GCC| 5.3.0 x64   |Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
+|MinGW GCC| 5.3.0 x86	|Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
+|Glang    | 3.8.0 x64	|Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
+|Glang    | 3.8.0 x86	|Windows               |Compiler crash                    |
+|MinGW GCC| 5.3.0 x64   |Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
+|MinGW GCC| 5.3.0 x86	|Windows               |**WORKS DELEGATE_TYPE_INTERNAL**  |
+|GCC      | 4.9.2 ARM	|Linux (Raspberry Pi2) |**WORKS DELEGATE_TYPE_COMPATIBLE**|
+|MinGW GCC| 5.3.0 x64   |Linux                 |**WORKS DELEGATE_TYPE_INTERNAL**  |
+|Glang    | 3.7.1 x64	|Linux                 |**WORKS DELEGATE_TYPE_INTERNAL**  |
+|VS2015   | x64         |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at TrickyVirtualFunction |
+|VS2015   | x86	        |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at first call |
+
+# Description
 There are many implementations of delegate-like functionality for
 C++ code, but none of them is a perfect drop-in fit for use in MAME.
 In order to be useful in MAME, we need the following properties:
@@ -61,5 +81,4 @@ Pros:
 
 Cons:
 	* requires internal knowledge of the member function pointer
-	* only works for GCC (for now; MSVC info is also readily available)
 	
