@@ -45,19 +45,13 @@ private:
 	int code;
 };
 
-
-#define DISABLE_COPYING(_Type) \
-private: \
-	_Type(const _Type &) = delete; \
-	_Type &operator=(const _Type &) = delete
-
 // ======================> device_t
 
 // device_t represents a device
 class device_t : public delegate_late_bind
 {
-	DISABLE_COPYING(device_t);
-
+	device_t(const device_t &) = delete; 
+    device_t &operator=(const device_t &) = delete;
 public:
 	// construction/destruction
 	device_t(const char *tag) { m_tag = tag; }
