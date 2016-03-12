@@ -22,6 +22,8 @@ So far status is next:
 |VS2015   | x64         |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at TrickyVirtualFunction |
 |VS2015   | x86	        |Windows               |**WORKS DELEGATE_TYPE_MSVC** crash at first call |
 
+At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and similar platforms.
+
 # Description
 There are many implementations of delegate-like functionality for
 C++ code, but none of them is a perfect drop-in fit for use in MAME.
