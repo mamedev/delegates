@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <chrono>
 #include <assert.h>
-#include "src\osdcomm.h"
-#include "src\delegate.h"
+#include "src/osdcomm.h"
+#include "src/delegate.h"
 
 class running_machine
 {
