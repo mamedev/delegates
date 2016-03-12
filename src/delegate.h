@@ -111,7 +111,7 @@
 		#define MEMBER_ABI
 		#define HAS_DIFFERENT_ABI 0
 	#endif
-#elif defined(_MSC_VER) && defined (_M_X64)
+#elif defined(_MSC_VER)
 #define MEMBER_ABI
 #define HAS_DIFFERENT_ABI 0
 #define USE_DELEGATE_TYPE DELEGATE_TYPE_MSVC
