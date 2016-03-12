@@ -15,6 +15,7 @@ class device_t;
 
 #include <assert.h>
 #include <string>
+#include <map>
 #include "osdcomm.h"
 #include "devdelegate.h"
 
@@ -57,17 +58,22 @@ class device_t : public delegate_late_bind
 {
 	DISABLE_COPYING(device_t);
 
+public:
 	// construction/destruction
 	device_t(const char *tag) { m_tag = tag; }
-public:
 	virtual ~device_t() { }
 
 	// getters
 	const char *tag() const { return m_tag.c_str(); }
 
-	device_t* subdevice(const char* m_device_name) { return nullptr; }
+	int read() { return m_internal; }
+	void write(int j) { m_internal = j; }
+	device_t* subdevice(const char* m_device_name) { return m_subdevices[m_device_name]; }
+	void add_device(const char* name, device_t *device) { m_subdevices.insert(std::pair<std::string,device_t*>(name,device)); }
 private:
+	int				m_internal;
 	std::string             m_tag;                  // full tag for this instance
+	std::map<std::string,device_t*>  m_subdevices;
 };
 
 

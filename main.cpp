@@ -69,6 +69,9 @@ public:
 typedef delegate<void(void)> VoidDelegate;
 typedef delegate<void(int)> MyDelegate;
 
+typedef device_delegate<int()> read_line_delegate;
+typedef device_delegate<void(int)> write_line_delegate;
+
 template<class _FunctionClass>
 void dump_mfp(_FunctionClass *object, void (_FunctionClass::*mfp)(int num))
 {
@@ -126,6 +129,25 @@ int main(int argc, char* argv[])
 #elif USE_DELEGATE_TYPE==DELEGATE_TYPE_MSVC
 	printf("Using fast internal MSVC delegates\n");
 #endif
+	device_t root("root");
+	device_t sub1("sub1");
+	device_t sub2("sub2");
+	root.add_device("sub1", &sub1);
+	root.add_device("sub2", &sub2);
+
+	write_line_delegate write_del = write_line_delegate(FUNC(device_t::write), &root);
+	read_line_delegate read_del = read_line_delegate(FUNC(device_t::read), &root);
+	write_del(100);
+	printf("read_line_delegate : %d\n", read_del());
+
+	write_line_delegate sub1_write_del = write_line_delegate(FUNC(device_t::write),"sub1",(device_t*)nullptr);
+	read_line_delegate sub1_read_del = read_line_delegate(FUNC(device_t::read), "sub1", (device_t*)nullptr);
+	sub1_write_del.bind_relative_to(root);
+	sub1_read_del.bind_relative_to(root);
+	sub1_write_del(200);
+
+	printf("read_line_delegate sub 1: %d\n", sub1_read_del());
+
 
 	running_machine machine;
 	MyDelegate funclist[12]; // delegates are initialized to empty
@@ -164,6 +186,8 @@ int main(int argc, char* argv[])
 			fflush(stdout);
 		}
 	}
+
+	
 	printf("Done\n");
 	return 0;
 
