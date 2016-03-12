@@ -141,9 +141,12 @@
   <ItemGroup>
     <ClCompile Include="..\src\delegate.cpp" />
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\src\devdelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\delegate.h" />
+    <ClInclude Include="..\src\devdelegate.h" />
+    <ClInclude Include="..\src\emu.h" />
     <ClInclude Include="..\src\osdcomm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
