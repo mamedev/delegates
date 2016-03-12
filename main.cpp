@@ -69,14 +69,72 @@ public:
 typedef delegate<void(void)> VoidDelegate;
 typedef delegate<void(int)> MyDelegate;
 
+template<class _FunctionClass>
+void dump_mfp(_FunctionClass *object, void (_FunctionClass::*mfp)(int num))
+{
+	unsigned long *ptr = (unsigned long *)&mfp;
+	int size = sizeof(mfp) / sizeof(*ptr);
+	(object->*mfp)(1);
+	printf("Size = %d bytes:\n", (int)sizeof(mfp));
+	for (int i = 0; i < size; i++)
+		printf("  %08X\n", (UINT32)ptr[i]);
+}
+
+void dump_vtable(const char *name, void *ptr)
+{
+	void **vtable = *reinterpret_cast<void ***>(ptr);
+	printf("\n%s: vtable @ %p = %p %p %p %p\n", name, vtable, vtable[0], vtable[1], vtable[2], vtable[3]);
+}
+
 int main(int argc, char* argv[])
 {
+#if defined(__clang__)
+	printf("Clang version: %d.%d.%d\n", __clang_major__, __clang_minor__, __clang_patchlevel__);
+#elif defined(_MSC_VER)
+	printf("MSC_VER version: %d\n", _MSC_VER);
+#elif defined(__GNUC__)
+	printf("GCC version: %d.%d.%d\n", __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
+#else
+	printf("Unknown compiler\n");
+#endif //
+
+#if defined(__arm__) || defined(_M_ARM)
+	printf("ARM\n");
+#elif defined(__aarch64__)
+	printf("ARM 64bit\n");
+#elif defined(__MIPSEL__) || defined(__mips_isa_rev)
+	printf("MIPS\n");
+#elif defined(__mips64)
+	printf("MIPS 64bit\n");
+#elif defined(_M_PPC) || defined(__powerpc__)
+	printf("PPC\n");
+#elif defined(__powerpc64__)
+	printf("PPC 64bit\n");
+#elif defined(__i386__) || defined(_M_IX86)
+	printf("Intel x86\n");
+#elif defined(__x86_64__) || defined(_M_X64)
+	printf("Intel x64\n");
+#else
+	printf("Unknown CPU\n");
+#endif //
+	printf("Pointer size %d\n", (int)sizeof(void *));
+
 	running_machine machine;
 	MyDelegate funclist[12]; // delegates are initialized to empty
 	CBaseClass a("Base A");
 	CBaseClass b("Base B");
-	CDerivedClass d;
 	CDerivedClass c;
+	CDerivedClass d;
+
+	dump_vtable("A", &a);
+	dump_vtable("D", &d);
+
+
+	dump_mfp(&a, &CBaseClass::SimpleMemberFunction);
+	dump_mfp(&a, &CBaseClass::SimpleVirtualFunction);
+
+	dump_mfp(&d, &CDerivedClass::SimpleDerivedFunction);
+	dump_mfp(&d, &CDerivedClass::TrickyVirtualFunction);
 
 	// Binding a simple member function
 	funclist[0] = MyDelegate(FUNC(CBaseClass::SimpleMemberFunction), &a);
