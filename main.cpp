@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <chrono>
-#include "src/emu.h"
+#include "mame/emu.h"
 #include "src/delegate.h"
-#include "src/devdelegate.h"
+#include "mame/devdelegate.h"
 
 class running_machine
 {
@@ -80,7 +80,7 @@ void dump_mfp(_FunctionClass *object, void (_FunctionClass::*mfp)(int num))
 	(object->*mfp)(1);
 	printf("Size = %d bytes:\n", (int)sizeof(mfp));
 	for (int i = 0; i < size; i++)
-		printf("  %08X\n", (UINT32)ptr[i]);
+		printf("  %08X\n", (std::uint32_t)ptr[i]);
 }
 
 void dump_vtable(const char *name, void *ptr)

@@ -141,13 +141,12 @@
   <ItemGroup>
     <ClCompile Include="..\src\delegate.cpp" />
     <ClCompile Include="..\main.cpp" />
-    <ClCompile Include="..\src\devdelegate.cpp" />
+    <ClCompile Include="..\mame\devdelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\delegate.h" />
-    <ClInclude Include="..\src\devdelegate.h" />
-    <ClInclude Include="..\src\emu.h" />
-    <ClInclude Include="..\src\osdcomm.h" />
+    <ClInclude Include="..\mame\delegate.h" />
+    <ClInclude Include="..\mame\devdelegate.h" />
+    <ClInclude Include="..\mame\emu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

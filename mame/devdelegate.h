@@ -13,7 +13,7 @@
 #ifndef __DEVDELEGATE_H__
 #define __DEVDELEGATE_H__
 
-#include "delegate.h"
+#include "../src/delegate.h"
 
 
 //**************************************************************************

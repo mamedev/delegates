@@ -82,6 +82,7 @@
 #include <exception>
 #include <typeinfo>
 #include <utility>
+#include <cstring>
 
 
 //**************************************************************************
@@ -323,7 +324,7 @@ private:
 	delegate_generic_function convert_to_generic(delegate_generic_class *&object) const;
 
 	// actual state
-	FPTR                    m_function;         // first item can be one of two things:
+	uintptr_t               m_function;         // first item can be one of two things:
 												//    if even, it's a pointer to the function
 												//    if odd, it's the byte offset into the vtable
 	int                     m_this_delta;       // delta to apply to the 'this' pointer
@@ -368,7 +369,7 @@ public:
 	{
 		funcptr = reinterpret_cast<_FunctionType>(m_function);
 		if (m_size == SINGLE_MEMFUNCPTR_SIZE + sizeof(int))
-			object = reinterpret_cast<delegate_generic_class *>(reinterpret_cast<UINT8 *>(object) + m_this_delta);
+			object = reinterpret_cast<delegate_generic_class *>(reinterpret_cast<std::uint8_t *>(object) + m_this_delta);
 	}
 
 private:
@@ -376,7 +377,7 @@ private:
 	delegate_generic_function convert_to_generic(delegate_generic_class *&object) const;
 
 	// actual state
-	FPTR                    m_function;         // first item can be one of two things:
+	uintptr_t               m_function;         // first item can be one of two things:
 												//    if even, it's a pointer to the function
 												//    if odd, it's the byte offset into the vtable
 	int                     m_this_delta;       // delta to apply to the 'this' pointer
