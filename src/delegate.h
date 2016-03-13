@@ -309,7 +309,7 @@ public:
 
 	// comparison helpers
 	bool operator==(const delegate_mfp &rhs) const { return (m_function == rhs.m_function && m_this_delta == rhs.m_this_delta); }
-	bool isnull() const { return (m_function == 0); }
+	bool isnull() const { return (m_function == 0 && m_this_delta==0); }
 
 	// getters
 	delegate_generic_class *real_object(delegate_generic_class *original) const { return original; }
