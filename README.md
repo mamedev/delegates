@@ -14,7 +14,7 @@ So far status is next:
 |MinGW GCC| 5.3.0 x86	|Windows               |**DELEGATE_TYPE_INTERNAL**        |
 |Clang    | 3.8.0 x64	|Windows               |**DELEGATE_TYPE_INTERNAL**        |
 |Clang    | 3.8.0 x86	|Windows               |Compiler crash                    |
-|GCC      | 4.9.2 ARM	|Linux (RasPi2)        |**DELEGATE_TYPE_INTERNAL** crash at Num=3|
+|GCC      | 4.9.2 ARM	|Linux (RasPi2)        |**DELEGATE_TYPE_INTERNAL**        |
 |MinGW GCC| 5.3.0 x64   |Linux                 |**DELEGATE_TYPE_INTERNAL**        |
 |Clang    | 3.7.1 x64	|Linux                 |**DELEGATE_TYPE_INTERNAL**        |
 |VS2015   | x64         |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=5 |
@@ -33,7 +33,7 @@ Doing 100000000 to a virtual method
 |MinGW GCC| 5.3.0 x86	|Windows               | 132027200                        | 279683700                       |
 |Clang    | 3.8.0 x64	|Windows               | 131536700                        | 159824800                       |
 |Clang    | 3.8.0 x86	|Windows               |                                  |                                 |
-|GCC      | 4.9.2 ARM	|Linux (RasPi2)        |                                  |                                 |
+|GCC      | 4.9.2 ARM	|Linux (RasPi2)        | 1141460440                       | 4390033750                      |
 |MinGW GCC| 5.3.0 x64   |Linux                 |                                  |                                 |
 |Clang    | 3.7.1 x64	|Linux                 |                                  |                                 |
 |VS2015   | x64         |Windows               |                                  |                                 |
