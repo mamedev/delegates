@@ -39,7 +39,7 @@ delegate_mfp::raw_mfp_data delegate_mfp::s_null_mfp = { {0 }};
 
 delegate_generic_function delegate_mfp::convert_to_generic(delegate_generic_class *&object) const
 {
-#if defined(__arm__) || defined(__ARMEL__)
+#if defined(__arm__) || defined(__ARMEL__) || defined(__aarch64__)
 	// apply the "this" delta to the object first
 	object = reinterpret_cast<delegate_generic_class *>(reinterpret_cast<std::uint8_t *>(object));
 
