@@ -19,7 +19,7 @@ So far status is next:
 |Clang    | 3.7.1 x64	|Linux                 |**DELEGATE_TYPE_INTERNAL**        |
 |VS2015   | x64         |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=5 |
 |VS2015   | x86	        |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=0 |
-|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |**DELEGATE_TYPE_INTERNAL** crash at Num=3|
+|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |**DELEGATE_TYPE_INTERNAL** |
 
 At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and similar platforms.
 
@@ -38,7 +38,7 @@ Doing 100000000 to a virtual method
 |Clang    | 3.7.1 x64	|Linux                 |                                  |                                 |
 |VS2015   | x64         |Windows               |                                  |                                 |
 |VS2015   | x86	        |Windows               |                                  |                                 |
-|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |                                  |                                 |
+|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 651618052                        |                                 |
 
 Windows machine Intel i7-4790K @4.00GHz
 
