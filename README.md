@@ -38,7 +38,7 @@ Doing 100000000 to a virtual method
 |Clang    | 3.7.1 x64	|Linux                 |                                  |                                 |
 |VS2015   | x64         |Windows               |                                  |                                 |
 |VS2015   | x86	        |Windows               |                                  |                                 |
-|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 651618052                        |                                 |
+|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 651618052                        | 1173487708                      |
 
 Windows machine Intel i7-4790K @4.00GHz
 
