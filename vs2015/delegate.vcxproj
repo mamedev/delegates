@@ -144,7 +144,7 @@
     <ClCompile Include="..\mame\devdelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\mame\delegate.h" />
+    <ClInclude Include="..\src\delegate.h" />
     <ClInclude Include="..\mame\devdelegate.h" />
     <ClInclude Include="..\mame\emu.h" />
   </ItemGroup>
