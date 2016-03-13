@@ -11,11 +11,11 @@ public:
 };
 
 // Declare some functions of varying complexity...
-void SimpleStaticFunction(running_machine &machine, int num) {
+void SimpleStaticFunction(running_machine &, int num) {
 	printf("In SimpleStaticFunction. Num=%d\n", num);
 }
 
-void SimpleVoidFunction(running_machine &machine) {
+void SimpleVoidFunction(running_machine &) {
 	printf("In SimpleVoidFunction with no parameters.\n");
 }
 
@@ -23,7 +23,8 @@ class CBaseClass {
 protected:
 	const char *m_name;
 public:
-	CBaseClass(const char *name) : m_name(name) {};
+	CBaseClass(const char *name) : m_name(name) {}
+	virtual ~CBaseClass() { }
 	void SimpleMemberFunction(int num) {
 		printf("In SimpleMemberFunction in %s. Num=%d\n", m_name, num);
 	}
@@ -36,7 +37,7 @@ public:
 	virtual void SimpleVirtualFunction(int num) {
 		printf("In SimpleVirtualFunction in %s. Num=%d\n", m_name, num);
 	}
-	static void StaticMemberFunction(running_machine &machine, int num) {
+	static void StaticMemberFunction(running_machine &, int num) {
 		printf("In StaticMemberFunction. Num=%d\n", num);
 	}
 };
@@ -44,6 +45,7 @@ public:
 class COtherClass {
 	double rubbish; // to ensure this class has non-zero size.
 public:
+	virtual ~COtherClass() { }
 	virtual void UnusedVirtualFunction(void) { }
 	virtual void TrickyVirtualFunction(int num) = 0;
 };
@@ -59,7 +61,7 @@ class CDerivedClass : public VeryBigClass, virtual public COtherClass, virtual p
 public:
 	CDerivedClass() : CBaseClass("Base of Derived") { m_somemember[0] = 1.2345; }
 	void SimpleDerivedFunction(int num) { printf("In SimpleDerived. num=%d\n", num); }
-	virtual void AnotherUnusedVirtualFunction(int num) {}
+	virtual void AnotherUnusedVirtualFunction(int) {}
 	virtual void TrickyVirtualFunction(int num) override {
 		printf("In Derived TrickyMemberFunction. Num=%d\n", num);
 	}
@@ -70,7 +72,7 @@ class MyClass
 {
 public:
 	MyClass() { i = 0; }
-	~MyClass() { }
+	virtual ~MyClass() { }
 
 	void docount2(int j) { i += j; }
 	virtual void docount(int j) { i+=j; }
@@ -83,8 +85,8 @@ class MyClass2 : public MyClass
 {
 public:
 	MyClass2() : MyClass() { }
-	~MyClass2() { }
-	virtual void docount(int j) {  }
+	virtual ~MyClass2() { }
+	virtual void docount(int) {  }
 };
 
 #define FUNC(x) &x, #x
@@ -107,7 +109,7 @@ void dump_mfp(_FunctionClass *object, void (_FunctionClass::*mfp)(int num))
 }
 
 template<class _FunctionClass>
-void dump_addr(const char *text, _FunctionClass *object, void (_FunctionClass::*mfp)(int num))
+void dump_addr(const char *, _FunctionClass *, void (_FunctionClass::*)(int))
 {
 	//printf("%s Addr = %08x\n", text, (void*)(object->*mfp));
 }
@@ -116,10 +118,10 @@ void dump_addr(const char *text, _FunctionClass *object, void (_FunctionClass::*
 void dump_vtable(const char *name, void *ptr)
 {
 	void **vtable = *reinterpret_cast<void ***>(ptr);
-	printf("%s: vtable @ %p = %p %p %p %p\n", name, vtable, vtable[0], vtable[1], vtable[2], vtable[3]);
+	printf("%s: vtable @ %p = %p %p %p %p\n", name, *vtable, vtable[0], vtable[1], vtable[2], vtable[3]);
 }
 
-int main(int argc, char* argv[])
+int main(int, char**)
 {
 #if defined(__clang__)
 	printf("Clang version: %d.%d.%d\n", __clang_major__, __clang_minor__, __clang_patchlevel__);
@@ -244,7 +246,7 @@ int main(int argc, char* argv[])
 		}
 		auto after = std::chrono::high_resolution_clock::now(); ;
 		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
-		printf("%lld\n", elapsed.count());
+		printf("%ld\n", elapsed.count());
 	}
 
 

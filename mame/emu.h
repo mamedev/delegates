@@ -13,7 +13,7 @@
 
 class device_t;
 
-#include <assert.h>
+#include <cassert>
 #include <string>
 #include <map>
 #include "devdelegate.h"
@@ -31,10 +31,10 @@ class emu_exception : public std::exception { };
 class emu_fatalerror : public emu_exception
 {
 public:
-	emu_fatalerror(const char *format, ...) { }
-	emu_fatalerror(const char *format, va_list ap) { }
-	emu_fatalerror(int _exitcode, const char *format, ...)  { }
-	emu_fatalerror(int _exitcode, const char *format, va_list ap) { }
+	emu_fatalerror(const char *, ...) { }
+	emu_fatalerror(const char *, va_list) { }
+	emu_fatalerror(int, const char *, ...)  { }
+	emu_fatalerror(int, const char *, va_list) { }
 
 	const char *string() const { return text; }
 	int exitcode() const { return code; }
