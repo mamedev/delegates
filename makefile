@@ -27,4 +27,4 @@ delegate_compat_sanitizer$(EXE): src/delegate.cpp src/delegate.h mame/devdelegat
 	
 clean:
 	@echo Cleaning...
-	-@rm -rf delegate$(EXE) delegate_compat$(EXE)
+	-@rm -rf delegate$(EXE) delegate_compat$(EXE) delegate_s_undefined$(EXE) delegate_s_undefined_opt$(EXE) delegate_s_address$(EXE) delegate_s_address_opt$(EXE) delegate_compat_s_undefined$(EXE) delegate_compat_s_undefined_opt$(EXE) delegate_compat_s_address$(EXE) delegate_compat_s_address_opt$(EXE)
