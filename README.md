@@ -20,6 +20,7 @@ So far status is next:
 |VS2015   | x64         |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=5 |
 |VS2015   | x86	        |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=0 |
 |GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |**DELEGATE_TYPE_INTERNAL** |
+|GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  |**DELEGATE_TYPE_INTERNAL** |
 
 At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and similar platforms.
 
@@ -39,6 +40,7 @@ Doing 100000000 to a virtual method
 |VS2015   | x64         |Windows               |                                  |                                 |
 |VS2015   | x86	        |Windows               |                                  |                                 |
 |GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 651618052                        | 1173487708                      |
+|GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  | 1458157648                       | 1458157661                      |
 
 Windows machine Intel i7-4790K @4.00GHz
 
