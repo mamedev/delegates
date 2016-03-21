@@ -21,6 +21,10 @@ So far status is next:
 |VS2015   | x86	        |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=0 |
 |GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |**DELEGATE_TYPE_INTERNAL** |
 |GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  |**DELEGATE_TYPE_INTERNAL** |
+|Emscripten    | 1.35.0 |               |**DELEGATE_TYPE_INTERNAL**        |
+
+
+
 
 At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and similar platforms.
 
