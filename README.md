@@ -51,7 +51,7 @@ Please note that times will be different from run to run, but values are near
 |Clang    | 3.7.1 x64	|Linux                 |                                  |                                 |
 |VS2015   | x64         |Windows               |                                  |                                 |
 |VS2015   | x86	        |Windows               |                                  |                                 |
-|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 651618052                        |                       |
+|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 654185671                        |  1370827564                     |
 |GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  | 1458157648                       |                       |
 
 Windows machine Intel i7-4790K @4.00GHz
