@@ -52,7 +52,7 @@ Please note that times will be different from run to run, but values are near
 |VS2015   | x64         |Windows               |                                  |                                 |
 |VS2015   | x86	        |Windows               |                                  |                                 |
 |GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 654185671                        |  1370827564                     |
-|GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  | 1458157648                       |                       |
+|GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  | 1002793705                       |   3341533518                    |
 
 Windows machine Intel i7-4790K @4.00GHz
 
