@@ -27,7 +27,7 @@ So far status is next:
 
 
 
-At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and similar platforms.
+At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on pnacl and similar platforms.
 
 # Benchmarks
 
@@ -41,7 +41,7 @@ Doing 100000000 to a virtual method
 
 Please note that times will be different from run to run, but values are near
 
-|Compiler | Version     | OS                   | Time native (ns)                 |Time std::function/bind (ns)     |
+|Compiler | Version     | OS                   | Time fast delegates native (ns)                 |Time std::function/bind (ns)     |
 |---------|-------------|----------------------|---------------------------------:|--------------------------------:|
 |MinGW GCC| 5.3.0 x64   |Windows               | 131547400                        | 216178100                       |
 |MinGW GCC| 5.3.0 x86	|Windows               | 131160000                        | 285218800                       |
