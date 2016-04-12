@@ -17,6 +17,7 @@ So far status is next:
 |GCC      | 4.9.2 ARM	|Linux (RasPi2)        |**DELEGATE_TYPE_INTERNAL**        |
 |GCC      | 5.3.1 x64   |Linux                 |**DELEGATE_TYPE_INTERNAL**        |
 |Clang    | 3.7.0 x64	|Linux                 |**DELEGATE_TYPE_INTERNAL**        |
+|Clang Apple | 7.3.0 x64 | OSX                 |**DELEGATE_TYPE_INTERNAL**        |
 |VS2015   | x64         |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=5 |
 |VS2015   | x86	        |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=0 |
 |GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |**DELEGATE_TYPE_INTERNAL** |
@@ -49,6 +50,7 @@ Please note that times will be different from run to run, but values are near
 |GCC      | 4.9.2 ARM	|Linux (RasPi2)        | 1120924321                       | 4146617167                      |
 |GCC      | 5.3.1 x64   |Linux                 | 139180356                        | 205068909                       |
 |Clang    | 3.7.0 x64	|Linux                 | 140548960                        | 182060144                       |
+|Clang Apple    | 7.3.0 x64	|OSX                   | 125145702                        | 262906798                       |
 |VS2015   | x64         |Windows               |                                  |                                 |
 |VS2015   | x86	        |Windows               |                                  |                                 |
 |GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 654185671                        | 1370827564                      |
