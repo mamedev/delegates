@@ -32,19 +32,27 @@ At the end **DELEGATE_TYPE_COMPATIBLE** should only be used on asm.js, pnacl and
 
 Doing 100000000 to a virtual method
 
-|Compiler | Version     | OS                   | Time native (ns)                 |Time compatible (ns)             |
+         typedef delegate<void(int j)> callback_delegate;
+         callback_delegate cb = callback_delegate(FUNC(MyClass2::docount), &mc);
+
+         typedef std::function<void(int)> callback_delegate_std;
+         callback_delegate_std  cb_std = std::bind(&MyClass2::docount, &mc, std::placeholders::_1);
+
+Please note that times will be different from run to run, but values are near
+
+|Compiler | Version     | OS                   | Time native (ns)                 |Time std::function/bind (ns)     |
 |---------|-------------|----------------------|---------------------------------:|--------------------------------:|
-|MinGW GCC| 5.3.0 x64   |Windows               | 116442400                        | 200505200                       |
-|MinGW GCC| 5.3.0 x86	|Windows               | 132027200                        | 279683700                       |
-|Clang    | 3.8.0 x64	|Windows               | 131536700                        | 159824800                       |
+|MinGW GCC| 5.3.0 x64   |Windows               | 131547400                        | 216178100                       |
+|MinGW GCC| 5.3.0 x86	|Windows               | 131160000                        | 285218800                       |
+|Clang    | 3.8.0 x64	|Windows               | 100766900                        | 219475700                       |
 |Clang    | 3.8.0 x86	|Windows               |                                  |                                 |
-|GCC      | 4.9.2 ARM	|Linux (RasPi2)        | 1141460440                       | 4390033750                      |
+|GCC      | 4.9.2 ARM	|Linux (RasPi2)        | 1141460440                       |                       |
 |MinGW GCC| 5.3.0 x64   |Linux                 |                                  |                                 |
 |Clang    | 3.7.1 x64	|Linux                 |                                  |                                 |
 |VS2015   | x64         |Windows               |                                  |                                 |
 |VS2015   | x86	        |Windows               |                                  |                                 |
-|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 651618052                        | 1173487708                      |
-|GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  | 1458157648                       | 1458157661                      |
+|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 651618052                        |                       |
+|GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  | 1458157648                       |                       |
 
 Windows machine Intel i7-4790K @4.00GHz
 
