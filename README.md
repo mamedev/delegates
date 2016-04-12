@@ -46,7 +46,7 @@ Please note that times will be different from run to run, but values are near
 |MinGW GCC| 5.3.0 x86	|Windows               | 131160000                        | 285218800                       |
 |Clang    | 3.8.0 x64	|Windows               | 100766900                        | 219475700                       |
 |Clang    | 3.8.0 x86	|Windows               |                                  |                                 |
-|GCC      | 4.9.2 ARM	|Linux (RasPi2)        | 1141460440                       |                       |
+|GCC      | 4.9.2 ARM	|Linux (RasPi2)        | 1120924321                       | 4146617167                      |
 |MinGW GCC| 5.3.0 x64   |Linux                 |                                  |                                 |
 |Clang    | 3.7.1 x64	|Linux                 |                                  |                                 |
 |VS2015   | x64         |Windows               |                                  |                                 |
