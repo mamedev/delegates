@@ -3,6 +3,7 @@
 #include "mame/emu.h"
 #include "src/delegate.h"
 #include "mame/devdelegate.h"
+#include <functional>
 
 class running_machine
 {
@@ -248,7 +249,22 @@ int main(int, char**)
 		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
 		printf("%ld\n", elapsed.count());
 	}
+	
+	using namespace std::placeholders;
+	
+	auto bindFunc = std::bind(&MyClass2::docount, &mc, _1);
 
+	printf("Benchmarking std::bind call : ");
+	{
+		auto before = std::chrono::high_resolution_clock::now(); ;
+		for (int i = 0; i < 100000000; i++)
+		{
+			bindFunc(i);
+		}
+		auto after = std::chrono::high_resolution_clock::now(); ;
+		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
+		printf("%ld\n", elapsed.count());
+	}
 
 	printf("Done\n");
 	return 0;
