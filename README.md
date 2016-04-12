@@ -15,8 +15,8 @@ So far status is next:
 |Clang    | 3.8.0 x64	|Windows               |**DELEGATE_TYPE_INTERNAL**        |
 |Clang    | 3.8.0 x86	|Windows               |Compiler crash                    |
 |GCC      | 4.9.2 ARM	|Linux (RasPi2)        |**DELEGATE_TYPE_INTERNAL**        |
-|MinGW GCC| 5.3.0 x64   |Linux                 |**DELEGATE_TYPE_INTERNAL**        |
-|Clang    | 3.7.1 x64	|Linux                 |**DELEGATE_TYPE_INTERNAL**        |
+|GCC      | 5.3.1 x64   |Linux                 |**DELEGATE_TYPE_INTERNAL**        |
+|Clang    | 3.7.0 x64	|Linux                 |**DELEGATE_TYPE_INTERNAL**        |
 |VS2015   | x64         |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=5 |
 |VS2015   | x86	        |Windows               |**DELEGATE_TYPE_MSVC** crash at Num=0 |
 |GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     |**DELEGATE_TYPE_INTERNAL** |
@@ -47,12 +47,12 @@ Please note that times will be different from run to run, but values are near
 |Clang    | 3.8.0 x64	|Windows               | 100766900                        | 219475700                       |
 |Clang    | 3.8.0 x86	|Windows               |                                  |                                 |
 |GCC      | 4.9.2 ARM	|Linux (RasPi2)        | 1120924321                       | 4146617167                      |
-|MinGW GCC| 5.3.0 x64   |Linux                 |                                  |                                 |
-|Clang    | 3.7.1 x64	|Linux                 |                                  |                                 |
+|GCC      | 5.3.1 x64   |Linux                 | 139180356                        | 205068909                       |
+|Clang    | 3.7.0 x64	|Linux                 | 140548960                        | 182060144                       |
 |VS2015   | x64         |Windows               |                                  |                                 |
 |VS2015   | x86	        |Windows               |                                  |                                 |
-|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 654185671                        |  1370827564                     |
-|GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  | 1002793705                       |   3341533518                    |
+|GCC      | 5.3.1 ARM64	|Linux (Odroid-C2)     | 654185671                        | 1370827564                      |
+|GCC      | 4.9.2 MIPSEL|Linux (Creator Ci20)  | 1002793705                       | 3341533518                      |
 
 Windows machine Intel i7-4790K @4.00GHz
 
