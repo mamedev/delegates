@@ -236,7 +236,7 @@ int main(int, char**)
 
 	typedef delegate<void(int j)> driver_callback_delegate;
 	MyClass2 mc;
-	driver_callback_delegate md = driver_callback_delegate(FUNC(MyClass2::docount), static_cast<MyClass2 *>(&mc));
+	driver_callback_delegate md = driver_callback_delegate(FUNC(MyClass2::docount), &mc);
 	
 	printf("Benchmarking virtual call : ");
 	{
@@ -247,23 +247,22 @@ int main(int, char**)
 		}
 		auto after = std::chrono::high_resolution_clock::now(); ;
 		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
-		printf("%ld\n", elapsed.count());
+		printf("%lld\n", elapsed.count());
 	}
 	
-	using namespace std::placeholders;
-	
-	auto bindFunc = std::bind(&MyClass2::docount, &mc, _1);
+	typedef std::function<void(int)> TranslateDelegate;	
+	TranslateDelegate pda = std::bind(&MyClass2::docount, &mc, std::placeholders::_1);
 
 	printf("Benchmarking std::bind call : ");
 	{
 		auto before = std::chrono::high_resolution_clock::now(); ;
 		for (int i = 0; i < 100000000; i++)
 		{
-			bindFunc(i);
+			pda(i);
 		}
 		auto after = std::chrono::high_resolution_clock::now(); ;
 		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
-		printf("%ld\n", elapsed.count());
+		printf("%lld\n", elapsed.count());
 	}
 
 	printf("Done\n");
