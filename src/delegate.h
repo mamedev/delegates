@@ -79,10 +79,9 @@
 #define __DELEGATE_H__
 
 // standard C++ includes
-#include <exception>
+#include <cstring>
 #include <typeinfo>
 #include <utility>
-#include <cstring>
 
 
 //**************************************************************************
@@ -258,7 +257,7 @@ private:
 	// helper to convert a function of a given type to a generic function, forcing template
 	// instantiation to match the source type
 	template <typename _SourceType>
-	delegate_generic_function make_generic(_SourceType funcptr)
+	static delegate_generic_function make_generic(_SourceType funcptr)
 	{
 		return reinterpret_cast<delegate_generic_function>(funcptr);
 	}
@@ -343,11 +342,15 @@ class delegate_mfp
 public:
 	// default constructor
 	delegate_mfp()
-		: m_function(0) { }
+		: m_function(0), m_this_delta(0), m_dummy1(0), m_dummy2(0), m_size(0)
+	{
+	}
 
 	// copy constructor
 	delegate_mfp(const delegate_mfp &src)
-		: m_function(src.m_function) { }
+		: m_function(src.m_function), m_this_delta(0), m_dummy1(0), m_dummy2(0), m_size(0)
+	{
+	}
 
 	// construct from any member function pointer
 	template<typename _MemberFunctionType, class _MemberFunctionClass, typename _ReturnType, typename _StaticFunctionType>
@@ -455,7 +458,7 @@ public:
 			m_name(name),
 			m_latebinder(&late_bind_helper<_FunctionClass>),
 			m_raw_function(nullptr),
-			m_raw_mfp(funcptr, object, (_ReturnType *)nullptr, static_cast<generic_static_func>(nullptr))
+			m_raw_mfp(funcptr, object, static_cast<_ReturnType *>(nullptr), static_cast<generic_static_func>(nullptr))
 	{
 		bind(reinterpret_cast<delegate_generic_class *>(object));
 	}
