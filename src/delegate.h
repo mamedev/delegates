@@ -135,7 +135,7 @@
 //**************************************************************************
 
 // generic function type
-typedef void (*delegate_generic_function)();
+using delegate_generic_function = void(*)();
 
 
 // ======================> generic_class
@@ -181,9 +181,9 @@ public:
 template<typename _ClassType, typename _ReturnType, typename... Params>
 struct delegate_traits
 {
-	typedef _ReturnType (*static_func_type)(_ClassType *, Params...);
-	typedef _ReturnType (*static_ref_func_type)(_ClassType &, Params...);
-	typedef _ReturnType (_ClassType::*member_func_type)(Params...);
+	using static_func_type = _ReturnType(*)(_ClassType *, Params...);
+	using static_ref_func_type = _ReturnType(*)(_ClassType &, Params...);
+	using member_func_type = _ReturnType(_ClassType::*)(Params...);
 };
 
 
@@ -248,7 +248,7 @@ private:
 	static _ReturnType method_stub(delegate_generic_class *object, Params ... args)
 	{
 		delegate_mfp *_this = reinterpret_cast<delegate_mfp *>(object);
-		typedef _ReturnType (_FunctionClass::*mfptype)(Params...);
+		using mfptype = _ReturnType(_FunctionClass::*)(Params...);
 		mfptype &mfp = *reinterpret_cast<mfptype *>(&_this->m_rawdata);
 		return (reinterpret_cast<_FunctionClass *>(_this->m_realobject)->*mfp)(std::forward<Params>(args)...);
 	}
@@ -366,7 +366,7 @@ public:
 	bool isnull() const { return (m_function == 0); }
 
 	// getters
-	delegate_generic_class *real_object(delegate_generic_class *original) const { return original; }
+	static delegate_generic_class *real_object(delegate_generic_class *original) { return original; }
 
 	// binding helper
 	template<typename _FunctionType>
@@ -412,12 +412,13 @@ public:
 	template<class _FunctionClass>
 	struct traits
 	{
-		typedef typename delegate_traits<_FunctionClass, _ReturnType, Params...>::member_func_type member_func_type;
-		typedef typename delegate_traits<_FunctionClass, _ReturnType, Params...>::static_func_type static_func_type;
-		typedef typename delegate_traits<_FunctionClass, _ReturnType, Params...>::static_ref_func_type static_ref_func_type;
+		using member_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::member_func_type;
+		using static_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::static_func_type;
+		using static_ref_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::static_ref_func_type;
 	};
-	typedef typename traits<delegate_generic_class>::static_func_type generic_static_func;
-	typedef MEMBER_ABI generic_static_func generic_member_func;
+
+	using generic_static_func = typename traits<delegate_generic_class>::static_func_type;
+	using generic_member_func = MEMBER_ABI generic_static_func;
 	// generic constructor
 	delegate_base()
 		: m_function(nullptr),
@@ -534,7 +535,7 @@ protected:
 	delegate_generic_class *object() const { return is_mfp() ? m_raw_mfp.real_object(m_object) : m_object; }
 
 	// late binding function
-	typedef delegate_generic_class *(*late_bind_func)(delegate_late_bind &object);
+	using late_bind_func = delegate_generic_class*(*)(delegate_late_bind &object);
 
 	// late binding helper
 	template<class _FunctionClass>
@@ -579,7 +580,7 @@ class delegate;
 template<typename _ReturnType, typename... Params>
 class delegate<_ReturnType (Params...)> : public delegate_base<_ReturnType, Params...>
 {
-	typedef delegate_base<_ReturnType, Params...> basetype;
+	using basetype = delegate_base<_ReturnType, Params...>;
 
 public:
 	// create a standard set of constructors
