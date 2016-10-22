@@ -311,7 +311,7 @@ public:
 	bool isnull() const { return (m_function == 0 && m_this_delta==0); }
 
 	// getters
-	delegate_generic_class *real_object(delegate_generic_class *original) const { return original; }
+	static delegate_generic_class *real_object(delegate_generic_class *original) { return original; }
 
 	// binding helper
 	template<typename _FunctionType>
