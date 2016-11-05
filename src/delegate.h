@@ -103,8 +103,6 @@
 		#define HAS_DIFFERENT_ABI 1
 	#elif defined(__clang__) && defined(__i386__) && defined(_WIN32)
 		#define USE_DELEGATE_TYPE DELEGATE_TYPE_COMPATIBLE
-	#elif defined(EMSCRIPTEN)
-		#define USE_DELEGATE_TYPE DELEGATE_TYPE_COMPATIBLE
 	#else
 		#define USE_DELEGATE_TYPE DELEGATE_TYPE_INTERNAL
 		#define MEMBER_ABI
@@ -279,7 +277,7 @@ private:
 	raw_mfp_data                m_rawdata;          // raw buffer to hold the copy of the function pointer
 	delegate_generic_class *    m_realobject;       // pointer to the object used for calling
 	delegate_generic_function   m_stubfunction;     // pointer to our matching stub function
-	static raw_mfp_data         s_null_mfp;         // NULL mfp
+	static raw_mfp_data         s_null_mfp;         // nullptr mfp
 };
 
 #elif (USE_DELEGATE_TYPE == DELEGATE_TYPE_INTERNAL)
@@ -543,14 +541,9 @@ public:
 	// comparison helper
 	bool operator==(const delegate_base &rhs) const
 	{
-		return (m_raw_function == rhs.m_raw_function && object() == rhs.object() && m_raw_mfp == rhs.m_raw_mfp && m_std_func == rhs.m_std_func);
+		return (m_raw_function == rhs.m_raw_function && object() == rhs.object() && m_raw_mfp == rhs.m_raw_mfp && m_std_func.target_type().name() == rhs.m_std_func.target_type().name());
 	}
 
-#define DELEGATE_CALL(x) \
-	if (is_mfp() && (HAS_DIFFERENT_ABI)) \
-		return (*reinterpret_cast<generic_member_func>(m_function)) x; \
-	else \
-		return (*m_function) x;
 
 	// call the function
 	_ReturnType operator()(Params... args) const {
