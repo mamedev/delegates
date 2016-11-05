@@ -54,6 +54,7 @@ public:
 	device_delegate(const basetype &src) : basetype(src), device_delegate_helper(src.m_device_name) { }
 	device_delegate(const basetype &src, delegate_late_bind &object) : basetype(src, object), device_delegate_helper(src.m_device_name) { }
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::member_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object), device_delegate_helper(safe_tag(dynamic_cast<device_t *>(object))) { }
+	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::const_member_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object), device_delegate_helper(safe_tag(dynamic_cast<device_t *>(object))) { }
 #ifdef USE_STATIC_DELEGATE
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::static_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object), device_delegate_helper(safe_tag(dynamic_cast<device_t *>(object))) { }
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::static_ref_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object), device_delegate_helper(safe_tag(dynamic_cast<device_t *>(object))) { }
@@ -63,6 +64,8 @@ public:
 	// provide additional constructors that take a device name string
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::member_func_type funcptr, const char *name, const char *devname) : basetype(funcptr, name, static_cast<_FunctionClass *>(nullptr)), device_delegate_helper(devname) { }
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::member_func_type funcptr, const char *name, const char *devname, _FunctionClass *) : basetype(funcptr, name, static_cast<_FunctionClass *>(nullptr)), device_delegate_helper(devname) { }
+	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::const_member_func_type funcptr, const char *name, const char *devname) : basetype(funcptr, name, static_cast<_FunctionClass *>(nullptr)), device_delegate_helper(devname) { }
+	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::const_member_func_type funcptr, const char *name, const char *devname, _FunctionClass *) : basetype(funcptr, name, static_cast<_FunctionClass *>(nullptr)), device_delegate_helper(devname) { }
 #ifdef USE_STATIC_DELEGATE
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::static_func_type funcptr, const char *name, const char *devname, _FunctionClass *) : basetype(funcptr, name, static_cast<_FunctionClass *>(nullptr)), device_delegate_helper(devname) { }
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::static_ref_func_type funcptr, const char *name, const char *devname, _FunctionClass *) : basetype(funcptr, name, static_cast<_FunctionClass *>(nullptr)), device_delegate_helper(devname) { }

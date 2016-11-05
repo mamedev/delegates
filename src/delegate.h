@@ -82,6 +82,7 @@
 #include <cstring>
 #include <typeinfo>
 #include <utility>
+#include <functional>
 
 
 //**************************************************************************
@@ -184,6 +185,7 @@ struct delegate_traits
 	using static_func_type = _ReturnType(*)(_ClassType *, Params...);
 	using static_ref_func_type = _ReturnType(*)(_ClassType &, Params...);
 	using member_func_type = _ReturnType(_ClassType::*)(Params...);
+	using const_member_func_type = _ReturnType(_ClassType::*)(Params...) const;	
 };
 
 
@@ -413,10 +415,10 @@ public:
 	struct traits
 	{
 		using member_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::member_func_type;
+		using const_member_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::const_member_func_type;
 		using static_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::static_func_type;
 		using static_ref_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::static_ref_func_type;
 	};
-
 	using generic_static_func = typename traits<delegate_generic_class>::static_func_type;
 	using generic_member_func = MEMBER_ABI generic_static_func;
 	// generic constructor
@@ -425,7 +427,8 @@ public:
 			m_object(nullptr),
 			m_name(nullptr),
 			m_latebinder(nullptr),
-			m_raw_function(nullptr) { }
+			m_raw_function(nullptr),
+			m_std_func(nullptr){ }
 
 	// copy constructor
 	delegate_base(const delegate_base &src)
@@ -434,7 +437,8 @@ public:
 			m_name(src.m_name),
 			m_latebinder(src.m_latebinder),
 			m_raw_function(src.m_raw_function),
-			m_raw_mfp(src.m_raw_mfp)
+			m_raw_mfp(src.m_raw_mfp),
+			m_std_func(src.m_std_func)
 	{
 		bind(src.object());
 	}
@@ -446,7 +450,8 @@ public:
 			m_name(src.m_name),
 			m_latebinder(src.m_latebinder),
 			m_raw_function(src.m_raw_function),
-			m_raw_mfp(src.m_raw_mfp)
+			m_raw_mfp(src.m_raw_mfp),
+			m_std_func(src.m_std_func)
 	{
 		late_bind(object);
 	}
@@ -459,7 +464,21 @@ public:
 			m_name(name),
 			m_latebinder(&late_bind_helper<_FunctionClass>),
 			m_raw_function(nullptr),
-			m_raw_mfp(funcptr, object, static_cast<_ReturnType *>(nullptr), static_cast<generic_static_func>(nullptr))
+			m_raw_mfp(funcptr, object, static_cast<_ReturnType *>(nullptr), static_cast<generic_static_func>(nullptr)),
+			m_std_func(nullptr)
+	{
+		bind(reinterpret_cast<delegate_generic_class *>(object));
+	}
+
+	template<class _FunctionClass>
+	delegate_base(typename traits<_FunctionClass>::const_member_func_type funcptr, const char *name, _FunctionClass *object)
+		: m_function(nullptr),
+		m_object(nullptr),
+		m_name(name),
+		m_latebinder(&late_bind_helper<_FunctionClass>),
+		m_raw_function(nullptr),
+		m_raw_mfp(funcptr, object, static_cast<_ReturnType *>(nullptr), static_cast<generic_static_func>(nullptr)),
+		m_std_func(nullptr)
 	{
 		bind(reinterpret_cast<delegate_generic_class *>(object));
 	}
@@ -471,7 +490,8 @@ public:
 			m_object(nullptr),
 			m_name(name),
 			m_latebinder(&late_bind_helper<_FunctionClass>),
-			m_raw_function(reinterpret_cast<generic_static_func>(funcptr))
+			m_raw_function(reinterpret_cast<generic_static_func>(funcptr)),
+			m_std_func(nullptr)
 	{
 		bind(reinterpret_cast<delegate_generic_class *>(object));
 	}
@@ -483,9 +503,22 @@ public:
 			m_object(nullptr),
 			m_name(name),
 			m_latebinder(&late_bind_helper<_FunctionClass>),
-			m_raw_function(reinterpret_cast<generic_static_func>(funcptr))
+			m_raw_function(reinterpret_cast<generic_static_func>(funcptr)),
+			m_std_func(nullptr)
 	{
 		bind(reinterpret_cast<delegate_generic_class *>(object));
+	}
+
+	// construct from static reference function with object reference
+	delegate_base(std::function<_ReturnType(Params...)> funcptr, const char *name)
+		: m_function(nullptr),
+		m_object(nullptr),
+		m_name(name),
+		m_latebinder(nullptr),
+		m_raw_function(nullptr),
+		m_std_func(funcptr)
+	{
+		
 	}
 
 	// copy operator
@@ -499,6 +532,8 @@ public:
 			m_latebinder = src.m_latebinder;
 			m_raw_function = src.m_raw_function;
 			m_raw_mfp = src.m_raw_mfp;
+			m_std_func = src.m_std_func;
+
 			bind(src.object());
 		}
 		return *this;
@@ -507,7 +542,7 @@ public:
 	// comparison helper
 	bool operator==(const delegate_base &rhs) const
 	{
-		return (m_raw_function == rhs.m_raw_function && object() == rhs.object() && m_raw_mfp == rhs.m_raw_mfp);
+		return (m_raw_function == rhs.m_raw_function && object() == rhs.object() && m_raw_mfp == rhs.m_raw_mfp && m_std_func == rhs.m_std_func);
 	}
 
 #define DELEGATE_CALL(x) \
@@ -517,14 +552,21 @@ public:
 		return (*m_function) x;
 
 	// call the function
-	_ReturnType operator()(Params... args) const { DELEGATE_CALL((m_object, std::forward<Params>(args)...)); }
+	_ReturnType operator()(Params... args) const {
+		if (is_mfp() && (HAS_DIFFERENT_ABI))
+			return (*reinterpret_cast<generic_member_func>(m_function)) (m_object, std::forward<Params>(args)...);
+		else if (m_std_func)
+			return m_std_func(std::forward<Params>(args)...);
+		else
+			return (*m_function) (m_object, std::forward<Params>(args)...);
+	}
 
 	// getters
 	bool has_object() const { return (object() != nullptr); }
 	const char *name() const { return m_name; }
 
 	// helpers
-	bool isnull() const { return (m_raw_function == nullptr && m_raw_mfp.isnull()); }
+	bool isnull() const { return (m_raw_function == nullptr && m_raw_mfp.isnull() && !m_std_func); }
 	bool is_mfp() const { return !m_raw_mfp.isnull(); }
 
 	// late binding
@@ -560,6 +602,7 @@ protected:
 
 	// internal state
 	generic_static_func         m_function;         // resolved static function pointer
+	std::function<_ReturnType(Params...)>		m_std_func;
 	delegate_generic_class *    m_object;           // resolved object to the post-cast object
 	const char *                m_name;             // name string
 	late_bind_func              m_latebinder;       // late binding helper
@@ -588,6 +631,8 @@ public:
 	delegate(const basetype &src) : basetype(src) { }
 	delegate(const basetype &src, delegate_late_bind &object) : basetype(src, object) { }
 	template<class _FunctionClass> delegate(typename basetype::template traits<_FunctionClass>::member_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object) { }
+	template<class _FunctionClass> delegate(typename basetype::template traits<_FunctionClass>::const_member_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object) { }
+	delegate(std::function<_ReturnType(Params...)> funcptr, const char *name) : basetype(funcptr, name) { }
 #ifdef USE_STATIC_DELEGATE
 	template<class _FunctionClass> delegate(typename basetype::template traits<_FunctionClass>::static_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object) { }
 	template<class _FunctionClass> delegate(typename basetype::template traits<_FunctionClass>::static_ref_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object) { }

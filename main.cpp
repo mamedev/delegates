@@ -29,6 +29,10 @@ public:
 	void SimpleMemberFunction(int num) {
 		printf("In SimpleMemberFunction in %s. Num=%d\n", m_name, num);
 	}
+	void ConstSimpleMemberFunction(int num) const
+	{
+		printf("In ConstSimpleMemberFunction in %s. Num=%d\n", m_name, num);
+	}
 	int SimpleMemberFunctionReturnsInt(int num) {
 		printf("In SimpleMemberFunction in %s. Num=%d\n", m_name, num); return -1;
 	}
@@ -121,7 +125,10 @@ void dump_vtable(const char *name, void *ptr)
 	void **vtable = *reinterpret_cast<void ***>(ptr);
 	printf("%s: vtable @ %p = %p %p %p %p\n", name, *vtable, vtable[0], vtable[1], vtable[2], vtable[3]);
 }
-
+void print_num(int i)
+{
+	printf("print_num\n");
+}
 int main(int, char**)
 {
 #if defined(__clang__)
@@ -186,7 +193,7 @@ int main(int, char**)
 	dump_addr("CDerivedClass::SimpleDerivedFunction",&c, &CDerivedClass::SimpleDerivedFunction);
 	// Binding a simple member function
 	printf("funclist[0] = MyDelegate(FUNC(CBaseClass::SimpleMemberFunction), &a);\n");
-	funclist[0] = MyDelegate(FUNC(CBaseClass::SimpleMemberFunction), &a);
+	funclist[0] = MyDelegate(FUNC(CBaseClass::ConstSimpleMemberFunction), &a);
 
 	// You can also bind static (free) functions
 	printf("funclist[1] = MyDelegate(FUNC(SimpleStaticFunction),&machine);\n");
@@ -205,8 +212,14 @@ int main(int, char**)
 	funclist[6] = MyDelegate(FUNC(COtherClass::TrickyVirtualFunction),(COtherClass*)&c);
 	printf("funclist[7] = MyDelegate(FUNC(CDerivedClass::SimpleDerivedFunction),&c);\n");
 	funclist[7] = MyDelegate(FUNC(CDerivedClass::SimpleDerivedFunction),&c);
+	printf("funclist[8] = std::function<void(int)>\n");
+	std::function<void(int)> func = print_num;
+	funclist[8] = MyDelegate(func, "func");
+	printf("funclist[9] = MyDelegate(FUNC(CDerivedClass::SimpleDerivedFunction),&c);\n");
+	funclist[9] = MyDelegate([](int a) -> void { printf("lambda %d\n",a); }, "test");
+
 	fflush(stdout);
-	for (int i = 0; i<8; i++) {
+	for (int i = 0; i<10; i++) {
 		if (!funclist[i].isnull()) {
 			funclist[i](i);
 			fflush(stdout);
@@ -223,8 +236,10 @@ int main(int, char**)
 
 	write_line_delegate write_del = write_line_delegate(FUNC(device_t::write), &root);
 	read_line_delegate read_del = read_line_delegate(FUNC(device_t::read), &root);
+//	read_line_delegate read_del_delegate = read_line_delegate([]() -> int { printf("in read delegate lambda\n"); return 4; }, "test", &root);
 	write_del(100);
 	printf("read_line_delegate : %d\n", read_del());
+	//printf("read_line_delegate : %d\n", read_del_delegate());
 
 	write_line_delegate sub1_write_del = write_line_delegate(FUNC(device_t::write), "sub1", (device_t*)nullptr);
 	read_line_delegate sub1_read_del = read_line_delegate(FUNC(device_t::read), "sub1", (device_t*)nullptr);
