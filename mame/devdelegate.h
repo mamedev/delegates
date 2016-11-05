@@ -59,6 +59,7 @@ public:
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::static_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object), device_delegate_helper(safe_tag(dynamic_cast<device_t *>(object))) { }
 	template<class _FunctionClass> device_delegate(typename basetype::template traits<_FunctionClass>::static_ref_func_type funcptr, const char *name, _FunctionClass *object) : basetype(funcptr, name, object), device_delegate_helper(safe_tag(dynamic_cast<device_t *>(object))) { }
 #endif
+	device_delegate(std::function<_Signature> funcptr, const char *name) : basetype(funcptr, name), device_delegate_helper(nullptr) { }
 	device_delegate &operator=(const thistype &src) { *static_cast<basetype *>(this) = src; m_device_name = src.m_device_name; return *this; }
 
 	// provide additional constructors that take a device name string

@@ -129,6 +129,11 @@ void print_num(int i)
 {
 	printf("print_num\n");
 }
+
+int read_num()
+{
+	return 10;
+}
 int main(int, char**)
 {
 #if defined(__clang__)
@@ -236,18 +241,22 @@ int main(int, char**)
 
 	write_line_delegate write_del = write_line_delegate(FUNC(device_t::write), &root);
 	read_line_delegate read_del = read_line_delegate(FUNC(device_t::read), &root);
-//	read_line_delegate read_del_delegate = read_line_delegate([]() -> int { printf("in read delegate lambda\n"); return 4; }, "test", &root);
+	std::function<int()> func2 = read_num;
+	
+	read_line_delegate read_del_delegate = read_line_delegate(read_num, "test");
 	write_del(100);
 	printf("read_line_delegate : %d\n", read_del());
-	//printf("read_line_delegate : %d\n", read_del_delegate());
+	printf("read_line_delegate : %d\n", read_del_delegate());
 
 	write_line_delegate sub1_write_del = write_line_delegate(FUNC(device_t::write), "sub1", (device_t*)nullptr);
 	read_line_delegate sub1_read_del = read_line_delegate(FUNC(device_t::read), "sub1", (device_t*)nullptr);
+	read_line_delegate sud2_read_del_delegate = read_line_delegate([]() -> int { printf("in read delegate lambda\n"); return 4; }, "test");
 	sub1_write_del.bind_relative_to(root);
 	sub1_read_del.bind_relative_to(root);
 	sub1_write_del(200);
-
+	
 	printf("read_line_delegate sub 1: %d\n", sub1_read_del());
+	printf("read_line_delegate sub 1: %d\n", sud2_read_del_delegate());
 
 	typedef delegate<void(int j)> driver_callback_delegate;
 	MyClass2 mc;

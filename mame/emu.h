@@ -59,7 +59,7 @@ public:
 	// getters
 	const char *tag() const { return m_tag.c_str(); }
 
-	int read() { return m_internal; }
+	int read() const { return m_internal; }
 	void write(int j) { m_internal = j; }
 	device_t* subdevice(const char* m_device_name) { return m_subdevices[m_device_name]; }
 	void add_device(const char* name, device_t *device) { m_subdevices.insert(std::pair<std::string,device_t*>(name,device)); }

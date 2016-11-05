@@ -419,6 +419,7 @@ public:
 		using static_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::static_func_type;
 		using static_ref_func_type = typename delegate_traits<_FunctionClass, _ReturnType, Params...>::static_ref_func_type;
 	};
+	using functional_type = std::function<_ReturnType(Params...)>;
 	using generic_static_func = typename traits<delegate_generic_class>::static_func_type;
 	using generic_member_func = MEMBER_ABI generic_static_func;
 	// generic constructor
@@ -510,7 +511,7 @@ public:
 	}
 
 	// construct from static reference function with object reference
-	delegate_base(std::function<_ReturnType(Params...)> funcptr, const char *name)
+	delegate_base(functional_type funcptr, const char *name)
 		: m_function(nullptr),
 		m_object(nullptr),
 		m_name(name),
@@ -602,12 +603,12 @@ protected:
 
 	// internal state
 	generic_static_func         m_function;         // resolved static function pointer
-	std::function<_ReturnType(Params...)>		m_std_func;
 	delegate_generic_class *    m_object;           // resolved object to the post-cast object
 	const char *                m_name;             // name string
 	late_bind_func              m_latebinder;       // late binding helper
 	generic_static_func         m_raw_function;     // raw static function pointer
 	delegate_mfp                m_raw_mfp;          // raw member function pointer
+	functional_type             m_std_func;			// std::function pointer
 };
 
 
