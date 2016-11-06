@@ -197,31 +197,31 @@ int main(int, char**)
 	dump_addr("CDerivedClass::TrickyVirtualFunction",&c, &CDerivedClass::TrickyVirtualFunction);
 	dump_addr("CDerivedClass::SimpleDerivedFunction",&c, &CDerivedClass::SimpleDerivedFunction);
 	// Binding a simple member function
-	printf("funclist[0] = MyDelegate(FUNC(CBaseClass::SimpleMemberFunction), &a);\n");
-	funclist[0] = MyDelegate(FUNC(CBaseClass::ConstSimpleMemberFunction), &a);
+	printf("funclist[0] = MyDelegate(&CBaseClass::SimpleMemberFunction, &a);\n");
+	funclist[0] = MyDelegate(&CBaseClass::ConstSimpleMemberFunction, &a);
 
 	// You can also bind static (free) functions
-	printf("funclist[1] = MyDelegate(FUNC(SimpleStaticFunction),&machine);\n");
-	funclist[1] = MyDelegate(FUNC(SimpleStaticFunction),&machine);
+	printf("funclist[1] = MyDelegate(SimpleStaticFunction,&machine);\n");
+	funclist[1] = MyDelegate(&SimpleStaticFunction,&machine);
 	// and static member functions
-	printf("funclist[2] = MyDelegate(FUNC(CBaseClass::StaticMemberFunction), &machine);\n");
-	funclist[2] = MyDelegate(FUNC(CBaseClass::StaticMemberFunction), &machine);
+	printf("funclist[2] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);\n");
+	funclist[2] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);
 	// and virtual member functions
-	printf("funclist[3] = MyDelegate(FUNC(CBaseClass::SimpleVirtualFunction), &b);\n");
-	funclist[3] = MyDelegate(FUNC(CBaseClass::SimpleVirtualFunction), &b);
-	printf("funclist[4] = MyDelegate(FUNC(CBaseClass::SimpleVirtualFunction),(CBaseClass *)&d);\n");
-	funclist[4] = MyDelegate(FUNC(CBaseClass::SimpleVirtualFunction),(CBaseClass *)&d);
-	printf("funclist[5] = MyDelegate(FUNC(CDerivedClass::TrickyVirtualFunction),&c);\n");
-	funclist[5] = MyDelegate(FUNC(CDerivedClass::TrickyVirtualFunction),&c);
-	printf("funclist[6] = MyDelegate(FUNC(COtherClass::TrickyVirtualFunction),(COtherClass*)&c);\n");
-	funclist[6] = MyDelegate(FUNC(COtherClass::TrickyVirtualFunction),(COtherClass*)&c);
-	printf("funclist[7] = MyDelegate(FUNC(CDerivedClass::SimpleDerivedFunction),&c);\n");
-	funclist[7] = MyDelegate(FUNC(CDerivedClass::SimpleDerivedFunction),&c);
+	printf("funclist[3] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);\n");
+	funclist[3] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);
+	printf("funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);\n");
+	funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);
+	printf("funclist[5] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);\n");
+	funclist[5] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);
+	printf("funclist[6] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);\n");
+	funclist[6] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);
+	printf("funclist[7] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);\n");
+	funclist[7] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);
 	printf("funclist[8] = std::function<void(int)>\n");
 	std::function<void(int)> func = print_num;
-	funclist[8] = MyDelegate(func, "func");
-	printf("funclist[9] = MyDelegate(FUNC(CDerivedClass::SimpleDerivedFunction),&c);\n");
-	funclist[9] = MyDelegate([](int a) -> void { printf("lambda %d\n",a); }, "test");
+	funclist[8] = MyDelegate(func);
+	printf("funclist[9] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);\n");
+	funclist[9] = MyDelegate([](int a) -> void { printf("lambda %d\n",a); });
 
 	fflush(stdout);
 	for (int i = 0; i<10; i++) {
@@ -260,7 +260,7 @@ int main(int, char**)
 
 	typedef delegate<void(int j)> driver_callback_delegate;
 	MyClass2 mc;
-	driver_callback_delegate md = driver_callback_delegate(FUNC(MyClass2::docount), &mc);
+	driver_callback_delegate md = driver_callback_delegate(&MyClass2::docount, &mc);
 	
 	printf("Benchmarking virtual call : ");
 	{
