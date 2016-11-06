@@ -5,6 +5,9 @@
 #include "mame/devdelegate.h"
 #include <functional>
 
+
+#define BENCHMARK 1
+
 class running_machine
 {
 public:
@@ -134,6 +137,13 @@ int read_num()
 {
 	return 10;
 }
+
+int st = 0;
+void static_count(int j)
+{
+	st += j;
+}
+
 int main(int, char**)
 {
 #if defined(__clang__)
@@ -181,7 +191,7 @@ int main(int, char**)
 	CBaseClass b("Base B");
 	CDerivedClass c;
 	CDerivedClass d;
-
+#if !BENCHMARK	
 	dump_vtable("A", &a);
 	dump_vtable("D", &d);
 
@@ -257,8 +267,9 @@ int main(int, char**)
 	
 	printf("read_line_delegate sub 1: %d\n", sub1_read_del());
 	printf("read_line_delegate sub 1: %d\n", sud2_read_del_delegate());
-
+#else
 	typedef delegate<void(int j)> driver_callback_delegate;
+
 	MyClass2 mc;
 	driver_callback_delegate md = driver_callback_delegate(&MyClass2::docount, &mc);
 	
@@ -274,10 +285,10 @@ int main(int, char**)
 		printf("%lld\n", elapsed.count());
 	}
 	
-	typedef std::function<void(int)> TranslateDelegate;	
-	TranslateDelegate pda = std::bind(&MyClass2::docount, &mc, std::placeholders::_1);
+	int i = 0;
+	driver_callback_delegate pda = driver_callback_delegate([&](int j) {  i += j; });
 
-	printf("Benchmarking std::bind call : ");
+	printf("Benchmarking lambda call : ");
 	{
 		auto before = std::chrono::high_resolution_clock::now(); ;
 		for (int i = 0; i < 100000000; i++)
@@ -289,6 +300,35 @@ int main(int, char**)
 		printf("%lld\n", elapsed.count());
 	}
 
+	driver_callback_delegate md2 = driver_callback_delegate(&static_count);
+
+	printf("Benchmarking static call : ");
+	{
+		auto before = std::chrono::high_resolution_clock::now(); ;
+		for (int i = 0; i < 100000000; i++)
+		{
+			md2(i);
+		}
+		auto after = std::chrono::high_resolution_clock::now(); ;
+		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
+		printf("%lld\n", elapsed.count());
+	}
+
+	driver_callback_delegate md3 = driver_callback_delegate(std::function<void(int j)>(static_count));
+	printf("Benchmarking std::function call : ");
+	{
+		auto before = std::chrono::high_resolution_clock::now(); ;
+		for (int i = 0; i < 100000000; i++)
+		{
+			md3(i);
+		}
+		auto after = std::chrono::high_resolution_clock::now(); ;
+		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
+		printf("%lld\n", elapsed.count());
+	}
+
+
+#endif
 	printf("Done\n");
 	return 0;
 
