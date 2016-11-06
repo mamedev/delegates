@@ -327,6 +327,21 @@ int main(int, char**)
 		printf("%lld\n", elapsed.count());
 	}
 
+	MyClass2 mcbind;
+	auto f = std::bind(&MyClass2::docount, (MyClass2*)&mcbind, std::placeholders::_1);
+
+	driver_callback_delegate md4 = driver_callback_delegate(f);
+	printf("Benchmarking std::bind call : ");
+	{
+		auto before = std::chrono::high_resolution_clock::now(); ;
+		for (int i = 0; i < 100000000; i++)
+		{
+			md4(i);
+		}
+		auto after = std::chrono::high_resolution_clock::now(); ;
+		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(after - before);
+		printf("%lld\n", elapsed.count());
+	}
 
 #endif
 	printf("Done\n");
