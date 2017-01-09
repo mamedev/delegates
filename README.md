@@ -128,7 +128,7 @@ License (BSD 3-clause)
 <img align="right" src="http://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png">
 </a>
 
-	Copyright 2010-2016 Aaron Giles,Couriersud,Miodrag Milanovic. All rights reserved.
+	Copyright 2010-2017 Aaron Giles,Couriersud,Miodrag Milanovic. All rights reserved.
 	
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are met:
