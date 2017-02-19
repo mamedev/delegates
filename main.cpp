@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <chrono>
-#include "mame/emu.h"
+#include <cassert>
 #include "src/delegate.h"
-#include "mame/devdelegate.h"
 #include <functional>
 
 
-#define BENCHMARK 1
+#define BENCHMARK 0
 
 class running_machine
 {
@@ -101,9 +100,6 @@ public:
 
 typedef delegate<void(void)> VoidDelegate;
 typedef delegate<void(int)> MyDelegate;
-
-typedef device_delegate<int()> read_line_delegate;
-typedef device_delegate<void(int)> write_line_delegate;
 
 template<class _FunctionClass>
 void dump_mfp(_FunctionClass *object, void (_FunctionClass::*mfp)(int num))
@@ -241,32 +237,6 @@ int main(int, char**)
 		}
 	}
 
-	printf("Checking devdelegates:\n");
-
-	device_t root("root");
-	device_t sub1("sub1");
-	device_t sub2("sub2");
-	root.add_device("sub1", &sub1);
-	root.add_device("sub2", &sub2);
-
-	write_line_delegate write_del = write_line_delegate(FUNC(device_t::write), &root);
-	read_line_delegate read_del = read_line_delegate(FUNC(device_t::read), &root);
-	std::function<int()> func2 = read_num;
-	
-	read_line_delegate read_del_delegate = read_line_delegate(read_num, "test");
-	write_del(100);
-	printf("read_line_delegate : %d\n", read_del());
-	printf("read_line_delegate : %d\n", read_del_delegate());
-
-	write_line_delegate sub1_write_del = write_line_delegate(FUNC(device_t::write), "sub1", (device_t*)nullptr);
-	read_line_delegate sub1_read_del = read_line_delegate(FUNC(device_t::read), "sub1", (device_t*)nullptr);
-	read_line_delegate sud2_read_del_delegate = read_line_delegate([]() -> int { printf("in read delegate lambda\n"); return 4; }, "test");
-	sub1_write_del.bind_relative_to(root);
-	sub1_read_del.bind_relative_to(root);
-	sub1_write_del(200);
-	
-	printf("read_line_delegate sub 1: %d\n", sub1_read_del());
-	printf("read_line_delegate sub 1: %d\n", sud2_read_del_delegate());
 #else
 	typedef delegate<void(int j)> driver_callback_delegate;
 
