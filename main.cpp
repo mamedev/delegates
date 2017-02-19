@@ -67,7 +67,7 @@ class CDerivedClass : public VeryBigClass, virtual public COtherClass, virtual p
 	double m_somemember[8];
 public:
 	CDerivedClass() : CBaseClass("Base of Derived") { m_somemember[0] = 1.2345; }
-	void SimpleDerivedFunction(int num) { printf("In SimpleDerived. num=%d\n", num); }
+	void SimpleDerivedFunction(int num) { printf("In SimpleDerived. Num=%d\n", num); }
 	virtual void AnotherUnusedVirtualFunction(int) {}
 	virtual void TrickyVirtualFunction(int num) override {
 		printf("In Derived TrickyMemberFunction. Num=%d\n", num);
@@ -126,7 +126,7 @@ void dump_vtable(const char *name, void *ptr)
 }
 void print_num(int i)
 {
-	printf("print_num\n");
+	printf("In std:function. Num=%d\n",i);
 }
 
 int read_num()
@@ -204,33 +204,34 @@ int main(int, char**)
 	dump_addr("CDerivedClass::SimpleDerivedFunction",&c, &CDerivedClass::SimpleDerivedFunction);
 	// Binding a simple member function
 	printf("funclist[0] = MyDelegate(&CBaseClass::SimpleMemberFunction, &a);\n");
-	funclist[0] = MyDelegate(&CBaseClass::ConstSimpleMemberFunction, &a);
-
+	funclist[0] = MyDelegate(&CBaseClass::SimpleMemberFunction, &a);
+	printf("funclist[1] = MyDelegate(&CBaseClass::ConstSimpleMemberFunction, &a);\n");
+	funclist[1] = MyDelegate(&CBaseClass::ConstSimpleMemberFunction, &a);
 	// You can also bind static (free) functions
-	printf("funclist[1] = MyDelegate(SimpleStaticFunction,&machine);\n");
-	funclist[1] = MyDelegate(&SimpleStaticFunction,&machine);
+	printf("funclist[2] = MyDelegate(SimpleStaticFunction,&machine);\n");
+	funclist[2] = MyDelegate(&SimpleStaticFunction,&machine);
 	// and static member functions
-	printf("funclist[2] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);\n");
-	funclist[2] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);
+	printf("funclist[3] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);\n");
+	funclist[3] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);
 	// and virtual member functions
-	printf("funclist[3] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);\n");
-	funclist[3] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);
-	printf("funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);\n");
-	funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);
-	printf("funclist[5] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);\n");
-	funclist[5] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);
-	printf("funclist[6] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);\n");
-	funclist[6] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);
-	printf("funclist[7] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);\n");
-	funclist[7] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);
-	printf("funclist[8] = std::function<void(int)>\n");
+	printf("funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);\n");
+	funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);
+	printf("funclist[5] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);\n");
+	funclist[5] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);
+	printf("funclist[6] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);\n");
+	funclist[6] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);
+	printf("funclist[7] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);\n");
+	funclist[7] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);
+	printf("funclist[8] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);\n");
+	funclist[8] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);
+	printf("funclist[9] = std::function<void(int)>\n");
 	std::function<void(int)> func = print_num;
-	funclist[8] = MyDelegate(func);
-	printf("funclist[9] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);\n");
-	funclist[9] = MyDelegate([](int a) -> void { printf("lambda %d\n",a); });
+	funclist[9] = MyDelegate(func);
+	printf("funclist[10] = [](int a) -> void {}\n");
+	funclist[10] = MyDelegate([](int a) -> void { printf("In lambda. Num=%d\n",a); });
 
 	fflush(stdout);
-	for (int i = 0; i<10; i++) {
+	for (int i = 0; i<11; i++) {
 		if (!funclist[i].isnull()) {
 			funclist[i](i);
 			fflush(stdout);
