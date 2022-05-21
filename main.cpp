@@ -42,7 +42,7 @@ public:
 };
 
 class COtherClass {
-	double rubbish; // to ensure this class has non-zero size.
+	[[maybe_unused]] double rubbish; // to ensure this class has non-zero size.
 public:
 	virtual ~COtherClass() { }
 	virtual void UnusedVirtualFunction(void) { }
@@ -50,7 +50,7 @@ public:
 };
 
 class VeryBigClass {
-	int letsMakeThingsComplicated[400];
+	[[maybe_unused]] int letsMakeThingsComplicated[400];
 };
 
 // This declaration ensures that we get a convoluted class heirarchy.

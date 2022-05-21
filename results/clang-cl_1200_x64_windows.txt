@@ -1,0 +1,43 @@
+Clang version: 12.0.0
+Intel x64
+Pointer size 8
+Using fast internal MSVC delegates
+A: vtable @ 00007FF79A543E60 = 00007FF79A543E60 00007FF79A543E80 0000000000000000 0000000000000001
+D: vtable @ 00007FF79A543EA0 = 00007FF79A543EA0 0000000000000000 00007FF79A546860 00007FF79A543EB0
+In SimpleMemberFunction in Base A. Num=1
+Size = 8 bytes:
+  9A543A90
+  00007FF7
+In SimpleVirtualFunction in Base A. Num=1
+Size = 8 bytes:
+  9A543AB0
+  00007FF7
+In SimpleDerived. Num=1
+Size = 16 bytes:
+  9A543AC0
+  00007FF7
+  00000000
+  00000000
+In Derived TrickyMemberFunction. Num=1
+Size = 16 bytes:
+  9A543AE0
+  00007FF7
+  00000000
+  00000004
+funclist[0] = MyDelegate(&CBaseClass::SimpleMemberFunction, &a);
+funclist[1] = MyDelegate(&CBaseClass::ConstSimpleMemberFunction, &a);
+funclist[2] = MyDelegate(SimpleStaticFunction,&machine);
+funclist[3] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);
+funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);
+funclist[5] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);
+funclist[6] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);
+funclist[7] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);
+funclist[8] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);
+funclist[9] = std::function<void(int)>
+funclist[10] = [](int a) -> void {}
+In SimpleMemberFunction in Base A. Num=0
+In ConstSimpleMemberFunction in Base A. Num=1
+In SimpleStaticFunction. Num=2
+In StaticMemberFunction. Num=3
+In SimpleVirtualFunction in Base B. Num=4
+In SimpleVirtualFunction in Base of Derived. Num=5

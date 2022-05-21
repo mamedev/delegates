@@ -1,0 +1,64 @@
+GCC version: 10.3.0
+Intel x64
+Pointer size 8
+Using fast internal Itanium delegates
+A: vtable @ 00007ff6a58989d0 = 00007ff6a58989d0 00007ff6a58989c0 00007ff6a58989a0 0000000000000000
+D: vtable @ 00007ff6a5898a10 = 00007ff6a5898a10 00007ff6a5898a00 00007ff6a5898a30 00007ff6a5898a20
+In SimpleMemberFunction in Base A. Num=1
+Size = 16 bytes:
+  A5898970
+  00007FF6
+  00000000
+  00000000
+In SimpleVirtualFunction in Base A. Num=1
+Size = 16 bytes:
+  00000011
+  00000000
+  00000000
+  00000000
+In SimpleDerived. Num=1
+Size = 16 bytes:
+  A58989F0
+  00007FF6
+  00000000
+  00000000
+In Derived TrickyMemberFunction. Num=1
+Size = 16 bytes:
+  00000009
+  00000000
+  00000000
+  00000000
+funclist[0] = MyDelegate(&CBaseClass::SimpleMemberFunction, &a);
+Input this=000000d1651fe850 ptr=00007ff6a5898970 adj=0 Calculated this=000000d1651fe850 ptr=00007ff6a5898970
+funclist[1] = MyDelegate(&CBaseClass::ConstSimpleMemberFunction, &a);
+Input this=000000d1651fe850 ptr=00007ff6a5898da0 adj=0 Calculated this=000000d1651fe850 ptr=00007ff6a5898da0
+funclist[2] = MyDelegate(SimpleStaticFunction,&machine);
+funclist[3] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);
+funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);
+Input this=000000d1651fe860 ptr=0000000000000011 adj=0 Calculated this=000000d1651fe860 ptr=00007ff6a58989a0 (vtable)
+funclist[5] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);
+Input this=000000d1651ff988 ptr=0000000000000011 adj=0 Calculated this=000000d1651ff988 ptr=00007ff6a58989a0 (vtable)
+funclist[6] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);
+Input this=000000d1651fec40 ptr=0000000000000009 adj=0 Calculated this=000000d1651fec40 ptr=00007ff6a5898a00 (vtable)
+funclist[7] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);
+Input this=000000d1651ff2c8 ptr=0000000000000019 adj=0 Calculated this=000000d1651ff2c8 ptr=00007ff6a5898fc0 (vtable)
+funclist[8] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);
+Input this=000000d1651fec40 ptr=00007ff6a58989f0 adj=0 Calculated this=000000d1651fec40 ptr=00007ff6a58989f0
+funclist[9] = std::function<void(int)>
+Input this=00000279ee116db0 ptr=00007ff6a5898dc0 adj=0 Calculated this=00000279ee116db0 ptr=00007ff6a5898dc0
+Input this=00000279ee116db0 ptr=00007ff6a5898dc0 adj=0 Calculated this=00000279ee116db0 ptr=00007ff6a5898dc0
+funclist[10] = [](int a) -> void {}
+Input this=000000d1651fe8c8 ptr=00007ff6a5891ea0 adj=0 Calculated this=000000d1651fe8c8 ptr=00007ff6a5891ea0
+Input this=000000d1651febe8 ptr=00007ff6a5891ea0 adj=0 Calculated this=000000d1651febe8 ptr=00007ff6a5891ea0
+In SimpleMemberFunction in Base A. Num=0
+In ConstSimpleMemberFunction in Base A. Num=1
+In SimpleStaticFunction. Num=2
+In StaticMemberFunction. Num=3
+In SimpleVirtualFunction in Base B. Num=4
+In SimpleVirtualFunction in Base of Derived. Num=5
+In Derived TrickyMemberFunction. Num=6
+In Derived TrickyMemberFunction. Num=7
+In SimpleDerived. Num=8
+In std:function. Num=9
+In lambda. Num=10
+Done
