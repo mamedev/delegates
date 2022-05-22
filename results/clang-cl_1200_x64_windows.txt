@@ -2,39 +2,54 @@ Clang version: 12.0.0
 Intel x64
 Pointer size 8
 Using fast internal MSVC delegates
-A: vtable @ 00007FF79A543E60 = 00007FF79A543E60 00007FF79A543E80 0000000000000000 0000000000000001
-D: vtable @ 00007FF79A543EA0 = 00007FF79A543EA0 0000000000000000 00007FF79A546860 00007FF79A543EB0
+A: vtable @ 00007FF682C93F20 = 00007FF682C93F20 00007FF682C93F40 0000000000000000 0000000000000001
+D: vtable @ 00007FF682C93F60 = 00007FF682C93F60 0000000000000000 00007FF682C96860 00007FF682C93F70
 In SimpleMemberFunction in Base A. Num=1
 Size = 8 bytes:
-  9A543A90
-  00007FF7
+  82C93B60
+  00007FF6
 In SimpleVirtualFunction in Base A. Num=1
 Size = 8 bytes:
-  9A543AB0
-  00007FF7
+  82C93B80
+  00007FF6
 In SimpleDerived. Num=1
 Size = 16 bytes:
-  9A543AC0
-  00007FF7
+  82C93B90
+  00007FF6
   00000000
   00000000
 In Derived TrickyMemberFunction. Num=1
 Size = 16 bytes:
-  9A543AE0
-  00007FF7
+  82C93BB0
+  00007FF6
   00000000
   00000004
 funclist[0] = MyDelegate(&CBaseClass::SimpleMemberFunction, &a);
+Input this=000000FEAE1AF8B0 Calculated this=000000FEAE1AF8B0
 funclist[1] = MyDelegate(&CBaseClass::ConstSimpleMemberFunction, &a);
+Input this=000000FEAE1AF8B0 Calculated this=000000FEAE1AF8B0
 funclist[2] = MyDelegate(SimpleStaticFunction,&machine);
 funclist[3] = MyDelegate(&CBaseClass::StaticMemberFunction, &machine);
 funclist[4] = MyDelegate(&CBaseClass::SimpleVirtualFunction, &b);
+Input this=000000FEAE1AF8C0 Calculated this=000000FEAE1AF8C0
+Found virtual member function thunk at 00007FF682C93B80 redirecting to 00007FF682C93F40
 funclist[5] = MyDelegate(&CBaseClass::SimpleVirtualFunction,(CBaseClass *)&d);
+Input this=000000FEAE1AF260 Calculated this=000000FEAE1AF260
+Found virtual member function thunk at 00007FF682C93B80 redirecting to 00007FF682C93F40
 funclist[6] = MyDelegate(&CDerivedClass::TrickyVirtualFunction,&c);
+Input this=000000FEAE1AE500 thisdelta=0 Calculated this=000000FEAE1AE500
+Found virtual member function thunk at 00007FF682C93BB0 redirecting to 00007FF682C96860
 funclist[7] = MyDelegate(&COtherClass::TrickyVirtualFunction,(COtherClass*)&c);
+Input this=000000FEAE1AEB98 Calculated this=000000FEAE1AEB98
+Found virtual member function thunk at 00007FF682C93BB0 redirecting to 00007FF682C93FA0
 funclist[8] = MyDelegate(&CDerivedClass::SimpleDerivedFunction,&c);
+Input this=000000FEAE1AE500 thisdelta=0 Calculated this=000000FEAE1AE500
 funclist[9] = std::function<void(int)>
+Input this=00000264357335F0 Calculated this=00000264357335F0
+Input this=00000264357335F0 Calculated this=00000264357335F0
 funclist[10] = [](int a) -> void {}
+Input this=000000FEAE1AF948 Calculated this=000000FEAE1AF948
+Input this=000000FEAE1AF7A8 Calculated this=000000FEAE1AF7A8
 In SimpleMemberFunction in Base A. Num=0
 In ConstSimpleMemberFunction in Base A. Num=1
 In SimpleStaticFunction. Num=2

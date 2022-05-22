@@ -1,9 +1,14 @@
-/vs2015/Debug
-/vs2015/Release
-/vs2015/x64
+*~
+.*.sw?
+.DS_Store
 /*.exe
 /delegate
-/vs2015/*.opendb
-/vs2015/*.sdf
-/vs2015/*.user
-/vs2015/.vs
+/vs2019/*.opendb
+/vs2019/*.sdf
+/vs2019/*.user
+/vs2019/.vs
+/vs2019/Debug
+/vs2019/Debug (clang)
+/vs2019/Release
+/vs2019/Release (clang)
+/vs2019/x64

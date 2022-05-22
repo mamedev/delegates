@@ -20,8 +20,8 @@ Status so far:
 | MinGW clang | 12.0.0 i686   | Windows              | **MAME_DELEGATE_TYPE_COMPATIBLE**          |
 | clang-cl    | 12.0.0 x64    | Windows              | **MAME_DELEGATE_TYPE_MSVC** crash at Num=6 |
 | clang-cl    | 12.0.0 x86    | Windows              | **MAME_DELEGATE_TYPE_COMPATIBLE**          |
-| VS2019      | x64           | Windows              | **MAME_DELEGATE_TYPE_MSVC** crash at Num=6 |
-| VS2019      | x86           | Windows              | **MAME_DELEGATE_TYPE_COMPATIBLE**          |
+| MSVC        | 19.29 x64     | Windows              | **MAME_DELEGATE_TYPE_MSVC** crash at Num=6 |
+| MSVC        | 19.29 x86     | Windows              | **MAME_DELEGATE_TYPE_COMPATIBLE**          |
 | GCC         | 8.3.1 x86_64  | Linux                | **MAME_DELEGATE_TYPE_ITANIUM**             |
 | GCC         | 8.3.1 i686    | Linux                | **MAME_DELEGATE_TYPE_ITANIUM**             |
 | GCC         | 10.2.1 armhf  | Linux                | **MAME_DELEGATE_TYPE_ITANIUM**             |

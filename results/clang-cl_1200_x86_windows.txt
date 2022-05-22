@@ -2,22 +2,22 @@ Clang version: 12.0.0
 Intel x86
 Pointer size 4
 Using slow compatible delegates
-A: vtable @ 00123AC0 = 00123AC0 00123AE0 00000000 00000000
-D: vtable @ 00123B00 = 00123B00 00126700 00123B10 00123B40
+A: vtable @ 00233AC0 = 00233AC0 00233AE0 00000000 00000000
+D: vtable @ 00233B00 = 00233B00 00236700 00233B10 00233B40
 In SimpleMemberFunction in Base A. Num=1
 Size = 4 bytes:
-  001236C0
+  002336D0
 In SimpleVirtualFunction in Base A. Num=1
 Size = 4 bytes:
-  001236E0
+  002336F0
 In SimpleDerived. Num=1
 Size = 12 bytes:
-  001236F0
+  00233700
   00000000
   00000000
 In Derived TrickyMemberFunction. Num=1
 Size = 12 bytes:
-  00123710
+  00233720
   00000000
   00000004
 funclist[0] = MyDelegate(&CBaseClass::SimpleMemberFunction, &a);

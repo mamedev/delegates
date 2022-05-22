@@ -2,22 +2,22 @@ MSC_VER version: 1929
 Intel x86
 Pointer size 4
 Using slow compatible delegates
-A: vtable @ 00E91771 = 00E91771 00E914D3 00000000 53206E49
-D: vtable @ 00E91226 = 00E91226 00000000 00EAAC48 00E91744
+A: vtable @ 00DA21E0 = 00DA21E0 00DA21B0 00DA3B20 00DA3B60
+D: vtable @ 00DA22F0 = 00DA22F0 00DA6F70 00DA21E0 00DA21B0
 In SimpleMemberFunction in Base A. Num=1
 Size = 4 bytes:
-  00E914BA
+  00DA2170
 In SimpleVirtualFunction in Base A. Num=1
 Size = 4 bytes:
-  00E917D5
+  00DA3DED
 In SimpleDerived. Num=1
 Size = 12 bytes:
-  00E917F3
+  00DA22D0
   00000000
   00000000
 In Derived TrickyMemberFunction. Num=1
 Size = 12 bytes:
-  00E91172
+  00DA3DFA
   00000000
   00000004
 funclist[0] = MyDelegate(&CBaseClass::SimpleMemberFunction, &a);
